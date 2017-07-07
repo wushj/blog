@@ -113,13 +113,13 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-                <dependencies>
-                    <!-- 修改代码后自动生效，Reload Java classes without restarting the container -->
+                <!--<dependencies>
+                    &lt;!&ndash;&lt;!&ndash; 修改代码后自动生效，Reload Java classes without restarting the container &ndash;&gt;
                     <dependency>
                         <groupId>org.springframework</groupId>
                         <artifactId>springloaded</artifactId>
-                    </dependency>
-                </dependencies>
+                    </dependency>&ndash;&gt;
+                </dependencies>-->
             </plugin>
 		</plugins>
 	</build>
