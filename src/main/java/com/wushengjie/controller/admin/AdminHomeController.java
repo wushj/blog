@@ -41,11 +41,11 @@ public class AdminHomeController {
      * 后台首页
      * @return
      */
-    @RequestMapping("/admin/index")
+    @RequestMapping("/admin")
     public String adminIndex(Model model){
-//        String userName = (String) SecurityUtils.getSubject().getPrincipal();
-//        User user = userService.findByLoginName(userName);
-//        model.addAttribute("user",user);
+        String userName = (String) SecurityUtils.getSubject().getPrincipal();
+        User user = userService.findByLoginName(userName);
+        model.addAttribute("user",user);
         return "admin/index";
     }
 

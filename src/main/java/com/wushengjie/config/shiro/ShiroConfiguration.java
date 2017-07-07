@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * Created by wu on 2017/7/7.
  */
-//@Configuration
+@Configuration
 public class ShiroConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(ShiroConfiguration.class);
