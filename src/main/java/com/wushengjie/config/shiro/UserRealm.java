@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Created by wu on 2017/7/7.
  */
-@Component
+//@Component
 public class UserRealm extends AbstractUserRealm {
 
     @Override

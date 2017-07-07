@@ -1,6 +1,7 @@
 package com.wushengjie.config.shiro;
 
 import com.wushengjie.service.UserService;
+import com.wushengjie.util.Md5Util;
 import com.wushengjie.vo.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -24,7 +25,7 @@ import java.util.Set;
  */
 public abstract class AbstractUserRealm extends AuthorizingRealm {
 
-    private static final Logger logger = LoggerFactory.getLogger(ShiroConfiguration.class);
+    private static final Logger logger = LoggerFactory.getLogger(AbstractUserRealm.class);
 
     @Autowired
     private UserService userService;
@@ -41,11 +42,14 @@ public abstract class AbstractUserRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String currentLoginName = (String) principals.getPrimaryPrincipal();
+        principals.getRealmNames();
         Set<String> userRoles = new HashSet<>();
         Set<String> userPermissions = new HashSet<>();
+
         //从数据库中获取当前登录用户的详细信息
         User userInfo = userService.findByLoginName(currentLoginName);
         if (null != userInfo) {
+
             UserRolesAndPermissions groupContainer = doGetGroupAuthorizationInfo(userInfo);
             UserRolesAndPermissions roleContainer = doGetGroupAuthorizationInfo(userInfo);
             userRoles.addAll(groupContainer.getUserRoles());
@@ -75,7 +79,7 @@ public abstract class AbstractUserRealm extends AuthorizingRealm {
         User user = userService.findByLoginName(token.getUsername());
         if (user != null) {
             // 若存在，将此用户存放到登录认证info中，无需自己做密码对比，Shiro会为我们进行密码对比校验
-            return new SimpleAuthenticationInfo(user.getLoginName(), user.getPassword(), getName());
+            return new SimpleAuthenticationInfo(user.getLoginName(),user.getPassword(), getName());
         }
         return null;
     }

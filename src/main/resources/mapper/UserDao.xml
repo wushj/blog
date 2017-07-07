@@ -113,7 +113,7 @@
     <select id="findByUserName" resultMap="AllColumnMap">
         select
         <include refid="all_column"/>
-        from user
+        from USER
         where `USER_NAME`=#{userName}
     </select>
 
@@ -121,7 +121,7 @@
     <select id="findByLoginName" resultMap="AllColumnMap">
         select
         <include refid="all_column"/>
-        from user
+        from USER
         where `LOGIN_NAME`=#{loginName}
     </select>
 </mapper>

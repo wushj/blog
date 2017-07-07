@@ -8,11 +8,15 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   #thymeleaf
   thymeleaf:
+    cache: false
     #启用不严格检查html
     mode: LEGACYHTML5
-    cache: false
+
 #加载log4j2
 logging:
   config: classpath:log4j2.xml
   level: debug
   file:
+server:
+  session-timeout : 3600
+  port: 8088
