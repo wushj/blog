@@ -36,9 +36,9 @@
                 </li>
 
                 <li class="sidebar-nav-link">
-                    <a href="javascript:;" class="sidebar-nav-sub-title" class="active">
+                    <a href="javascript:;" class="sidebar-nav-sub-title active">
                         <i class="am-icon-file-text-o sidebar-nav-link-logo"></i> 文章管理
-                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
                     </a>
                     <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
                         <li class="sidebar-nav-link">
@@ -124,19 +124,7 @@
 
     <!-- 维护信息弹窗 -->
     <div id="dialogBg"></div>
-    <div id="dialog" class="animated">
-        <div class="dialogTop">
-            <a href="javascript:tipClose();" class="claseDialogBtn">关闭</a>
-        </div>
-        <form action="" method="POST" id="editForm">
-            <ul class="editInfos">
-                <input type="text" id="id" name="id" hidden th:value="${not #lists.isEmpty(category)} ? ${category.id} : '0'">
-                <li><label>名称：<input type="text" id="name" name="name" th:value="${not #lists.isEmpty(category)} ? ${category.name} : ''" required value="true" class="ipt" /></label></li>
-                <li><label>排序：<input type="text" id="sort" name="sort" th:value="${not #lists.isEmpty(category)} ? ${category.sort} : ''" required value="true" class="ipt" /></label></li>
-                <li><input type="submit" value="确认提交" onclick="saveCategory()" class="submitBtn" /></li>
-            </ul>
-        </form>
-    </div>
+    <div id="dialog" class="animated"></div>
 
     <script src="/assets/js/amazeui.min.js"></script>
     <script src="/assets/js/amazeui.datatables.min.js"></script>
@@ -171,13 +159,53 @@
 
         //点击新增按钮
         function categoryAdd(){
-            className = "bounceIn";
-            tipOpen();
+            $.ajax({
+                url : '/admin/category/addDetail',
+                method:"GET",
+                success  : function(data) {
+                    $('#dialog').html(data);
+                    tipOpen();
+                }
+            });
+        }
+
+        //点击新增按钮
+        function categoryEdit(id){
+            $.ajax({
+                url : '/admin/category/editDetail/'+id,
+                method:"GET",
+                success  : function(data) {
+                    $('#dialog').html(data);
+                    tipOpen();
+                }
+            });
+        }
+
+        //点击删除按钮
+        function categoryDelete(id){
+            layer.confirm('确定删除该条数据？', {
+                btn: ['确定','取消'] //按钮
+            }, function(){
+                $.ajax({
+                    url : '/admin/category/deleteDetail/'+id,
+                    method:"GET",
+                    success  : function(data) {
+                        layer.msg('删除成功!', {
+                            time: 1000 //1s后自动关闭
+                        });
+                        tipClose();
+                        initPage();
+                        loadCategoryList();
+                    }
+                });
+            }, function(){
+                layer.close();
+            });
         }
 
         function tipOpen() {
             $('#dialogBg').fadeIn(300);
-            $('#dialog').removeAttr('class').addClass('animated ' + className + '').fadeIn();
+            $('#dialog').removeAttr('class').addClass('animated ' + 'bounceIn').fadeIn();
         }
 
         //关闭弹窗
@@ -191,15 +219,20 @@
         function saveCategory(){
             if(validateCategory()){
                 $.ajax({
-                    url : '/admin/category/saveOrUpdate',
-                    data : encodeURI($("#editForm").serialize()),
+                    url : '/admin/category/inertOrUpdate',
+                    data : decodeURIComponent($("#editForm").serialize(),true),
                     success  : function(data) {
                         if(data.resultCode == 'success'){
-                            $('#editCategoryModal').modal('hide');
-                            loadCategoryList();
+                            layer.msg('添加成功!', {
+                                time: 1000 //1s后自动关闭
+                            });
                             tipClose();
+                            initPage();
+                            loadCategoryList();
                         }else{
-                            alert(data.errorInfo,1000);
+                            layer.msg(data.errorInfo, {
+                                time: 1000 //1s后自动关闭
+                            });
                         }
                     }
                 });
@@ -212,20 +245,28 @@
             var sort = $("#sort").val();
             if(!isEmpty(name)){
                 if(isSpecialSymbols(name)){
-                    alert("分类名称不能包含特殊符号");
+                    layer.msg("分类名称不能包含特殊符号", {
+                        time: 1000 //1s后自动关闭
+                    });
                     return false;
                 }
             }else{
-                alert("分类名称不能为空");
+                layer.msg("分类名称不能为空", {
+                    time: 1000 //1s后自动关闭
+                });
                 return false;
             }
             if(!isEmpty(sort)){
                 if(!isNumber(sort)){
-                    alert("排序必须为数字");
+                    layer.msg("排序必须为数字", {
+                        time: 1000 //1s后自动关闭
+                    });
                     return false;
                 }
             }else{
-                alert("排序不能为空");
+                layer.msg("排序不能为空", {
+                    time: 1000 //1s后自动关闭
+                });
                 return false;
             }
             return true;
@@ -254,15 +295,17 @@
 
         // 搜索
         $("#category-search").on("click",function () {
+            $(this).attr("disabled","true");
             initPage();
             loadCategoryList();
+            $(this).removeAttr("disabled");
         });
 
         //初始化页面
         function initPage() {
             progress.start();
             var keyword = $("#keyword").val();
-            var page = $("#current-page").val();
+            var page = $("#current-page").text();
             if (page==null || page ==0 ){
                 page = 1;
             }

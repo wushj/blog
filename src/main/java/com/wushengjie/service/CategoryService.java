@@ -48,4 +48,8 @@ public class CategoryService{
     public Category findById(Integer id){
         return categoryDao.findById(id);
     }
+
+    public int deleteById(Integer id){
+        return categoryDao.deleteById(id);
+    }
 }

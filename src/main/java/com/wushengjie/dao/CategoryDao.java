@@ -25,4 +25,6 @@ public interface CategoryDao {
 
     Category findById(@Param("id")Integer id);
 
+    int deleteById(@Param("id")Integer id);
+
 }

@@ -1,11 +1,14 @@
 package com.wushengjie.controller.admin.category;
 
 import com.wushengjie.service.CategoryService;
+import com.wushengjie.util.ResultInfo;
+import com.wushengjie.util.ResultInfoFactory;
 import com.wushengjie.vo.Category;
 import com.wushengjie.vo.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -60,8 +63,9 @@ public class AdminCategoryController {
      * 更新或新增分类
      * @return
      */
-    @RequestMapping("/saveOrUpdate")
-    public String load(Category category){
+    @RequestMapping("/inertOrUpdate")
+    @ResponseBody
+    public ResultInfo inertOrUpdate(Category category){
         if(0 == category.getId()){
             category.setCreateTime(new Date());
             categoryService.insertSelective(category);
@@ -73,8 +77,45 @@ public class AdminCategoryController {
                 categoryService.update(oldCategory);
             }
         }
-        return "admin/category/categoryList";
+        return ResultInfoFactory.getSuccessResultInfo("删除分类成功！！！");
     }
 
+    /**
+     * 跳转到添加页面
+     * @return
+     */
+    @RequestMapping("/addDetail")
+    public String addPage(){
+        return "admin/category/categoryDetail";
+    }
+
+    /**
+     * 跳转修改页面
+     * @param id 分类id
+     * @param model
+     * @return
+     */
+    @RequestMapping("/editDetail/{id}")
+    public String editPage(@PathVariable Integer id, Model model){
+        Category category = categoryService.findById(id);
+        model.addAttribute("category",category);
+        return "admin/category/categoryDetail";
+    }
+
+    /**
+     * 删除制定id的分类
+     * 如果存在文章会将其移动到未分类
+     * @param categoryId
+     * @return
+     */
+    @RequestMapping("/deleteDetail/{categoryId}")
+    @ResponseBody
+    public ResultInfo deleteCategory(@PathVariable Integer categoryId){
+        int count = categoryService.deleteById(categoryId);
+        if (count > 0){
+            return ResultInfoFactory.getSuccessResultInfo("删除成功！！！");
+        }
+        return ResultInfoFactory.getErrorResultInfo();
+    }
 
 }

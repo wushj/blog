@@ -17,12 +17,12 @@
                 <td th:text="${category.name}"></td>
                 <td th:text="${category.sort}"></td>
                 <td th:text="${#dates.format(category.createTime,'yyyy年MM月dd日 HH:mm:ss')}"></td>
-                <td th:data-id="${category.id}">
+                <td>
                     <div class="tpl-table-black-operation">
-                        <a href="javascript:;">
+                        <a th:href="@{'javascript:categoryEdit('+ ${category.id} +')'}">
                             <i class="am-icon-pencil"></i> 编辑
                         </a>
-                        <a href="javascript:;" class="tpl-table-black-operation-del">
+                        <a th:href="@{'javascript:categoryDelete('+ ${category.id} +')'}" class="tpl-table-black-operation-del">
                             <i class="am-icon-trash"></i> 删除
                         </a>
                     </div>
