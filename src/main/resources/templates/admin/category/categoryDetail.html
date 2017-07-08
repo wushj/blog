@@ -8,7 +8,7 @@
             <input type="text" id="id" name="id" hidden th:value="${not #lists.isEmpty(category)} ? ${category.id} : '0'">
             <li><label>名称：<input type="text" id="name" name="name" th:value="${not #lists.isEmpty(category)} ? ${category.name} : ''" required value="true" class="ipt" /></label></li>
             <li><label>排序：<input type="text" id="sort" name="sort" th:value="${not #lists.isEmpty(category)} ? ${category.sort} : ''" required value="true" class="ipt" /></label></li>
-            <li><input type="button" value="确认" onclick="saveCategory()" class="submitBtn" /></li>
+            <li><input id ="saveButton" type="button" value="确认" onclick="saveCategory()" class="submitBtn" /></li>
         </ul>
     </form>
 </html>

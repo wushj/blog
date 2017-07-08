@@ -42,12 +42,12 @@
                     </a>
                     <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
                         <li class="sidebar-nav-link">
-                            <a href="/admin/category/list" class="sub-active">
-                                <span class="am-icon-th-list sidebar-nav-link-logo"></span>分类管理
+                            <a href="/admin/category/list">
+                                <span class="am-icon-th-list sidebar-nav-link-logo"></span>标签管理
                             </a>
                         </li>
                         <li class="sidebar-nav-link">
-                            <a href="/admin/tag/list">
+                            <a href="/admin/tag/list" class="sub-active">
                                 <span class="am-icon-tags sidebar-nav-link-logo"></span>标签管理
                             </a>
                         </li>
@@ -75,14 +75,14 @@
                 <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                     <div class="widget am-cf">
                         <div class="widget-head am-cf">
-                            <div class="widget-title  am-cf">文章分类</div>
+                            <div class="widget-title  am-cf">标签管理</div>
                         </div>
                         <div class="widget-body  am-fr">
                             <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
                                 <div class="am-form-group">
                                     <div class="am-btn-toolbar">
                                         <div class="am-btn-group am-btn-group-xs">
-                                            <button type="button" onclick="categoryAdd()" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> 新增</button>
+                                            <button type="button" onclick="tagAdd()" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> 新增</button>
                                         </div>
                                     </div>
                                 </div>
@@ -92,7 +92,7 @@
                                 <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
                                     <input type="text" id="keyword" class="am-form-field ">
                                     <span class="am-input-group-btn">
-                                        <button id="category-search" class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"></button>
+                                        <button id="tag-search" class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"></button>
                                     </span>
                                 </div>
                             </div>
@@ -158,9 +158,9 @@
         })
 
         //点击新增按钮
-        function categoryAdd(){
+        function tagAdd(){
             $.ajax({
-                url : '/admin/category/addDetail',
+                url : '/admin/tag/addDetail',
                 method:"GET",
                 success  : function(data) {
                     $('#dialog').html(data);
@@ -170,9 +170,9 @@
         }
 
         //点击新增按钮
-        function categoryEdit(id){
+        function tagEdit(id){
             $.ajax({
-                url : '/admin/category/editDetail/'+id,
+                url : '/admin/tag/editDetail/'+id,
                 method:"GET",
                 success  : function(data) {
                     $('#dialog').html(data);
@@ -182,12 +182,12 @@
         }
 
         //点击删除按钮
-        function categoryDelete(id){
+        function tagDelete(id){
             layer.confirm('确定删除该条数据？', {
                 btn: ['确定','取消'] //按钮
             }, function(){
                 $.ajax({
-                    url : '/admin/category/deleteDetail/'+id,
+                    url : '/admin/tag/deleteDetail/'+id,
                     method:"GET",
                     success  : function(data) {
                         layer.msg('删除成功!', {
@@ -195,7 +195,7 @@
                         });
                         tipClose();
                         initPage();
-                        loadCategoryList();
+                        loadtagList();
                     }
                 });
             }, function(){
@@ -215,12 +215,12 @@
             });
         };
 
-        // 编辑分类
-        function saveCategory(){
+        // 编辑标签
+        function saveTag(){
             $('#saveButton').attr("disabled","true");
-            if(validateCategory()){
+            if(validateTag()){
                 $.ajax({
-                    url : '/admin/category/inertOrUpdate',
+                    url : '/admin/tag/inertOrUpdate',
                     data : decodeURIComponent($("#editForm").serialize(),true),
                     success  : function(data) {
                         if(data.resultCode == 'success'){
@@ -229,7 +229,7 @@
                             });
                             tipClose();
                             initPage();
-                            loadCategoryList();
+                            loadTagList();
                         }else{
                             layer.msg(data.errorInfo, {
                                 time: 1000 //1s后自动关闭
@@ -241,46 +241,18 @@
             $('#saveButton').removeAttr("disabled");
         }
 
-        // 校验新增分类输入框
-        function validateCategory(){
+        // 校验新增标签输入框
+        function validateTag(){
             var name = $("#name").val();
-            var sort = $("#sort").val();
-            var url = $("#url").val();
             if(!isEmpty(name)){
                 if(isSpecialSymbols(name)){
-                    layer.msg("分类名称不能包含特殊符号", {
+                    layer.msg("标签名称不能包含特殊符号", {
                         time: 1000 //1s后自动关闭
                     });
                     return false;
                 }
             }else{
-                layer.msg("分类名称不能为空", {
-                    time: 1000 //1s后自动关闭
-                });
-                return false;
-            }
-            if(!isEmpty(sort)){
-                if(!isNumber(sort)){
-                    layer.msg("排序必须为数字", {
-                        time: 1000 //1s后自动关闭
-                    });
-                    return false;
-                }
-            }else{
-                layer.msg("排序不能为空", {
-                    time: 1000 //1s后自动关闭
-                });
-                return false;
-            }
-            if(!isEmpty(url)){
-                if(!isUrl(url)){
-                    layer.msg("URL格式不正确", {
-                        time: 1000 //1s后自动关闭
-                    });
-                    return false;
-                }
-            }else{
-                layer.msg("URL不能为空", {
+                layer.msg("标签名称不能为空", {
                     time: 1000 //1s后自动关闭
                 });
                 return false;
@@ -288,8 +260,8 @@
             return true;
         }
 
-        // 加载分类列表
-        function loadCategoryList(){
+        // 加载标签列表
+        function loadTagList(){
             progress.start();
             // 收集参数
             var keyword = $("#keyword").val();
@@ -300,8 +272,8 @@
 
             // 查询列表
             $.ajax({
-                url : '/admin/category/load',
-                data : 'page='+page+"&categoryName="+keyword,
+                url : '/admin/tag/load',
+                data : 'page='+page+"&tagName="+keyword,
                 success  : function(data) {
                     $("#dataList").html(data);
                 }
@@ -310,10 +282,10 @@
         }
 
         // 搜索
-        $("#category-search").on("click",function () {
+        $("#tag-search").on("click",function () {
             $(this).attr("disabled","true");
             initPage();
-            loadCategoryList();
+            loadTagList();
             $(this).removeAttr("disabled");
         });
 
@@ -326,8 +298,8 @@
                 page = 1;
             }
             $.ajax({
-                url : '/admin/category/initPage',
-                data : 'page='+page+"&categoryName="+keyword,
+                url : '/admin/tag/initPage',
+                data : 'page='+page+"&tagName="+keyword,
                 success  : function(data) {
                     $("#total-num").text(data.totalCount);
                     $("#total-page").text(data.totalPageNum);
@@ -341,13 +313,13 @@
                             next: '<li class="am-active"><a href="javascript:;">»</a></li>',
                             page: '<li class="am-active"><a href="javascript:;">{{page}}</a></li>',
                             onPageChange: function (num, type) {
-                                // 加载分类列表
+                                // 加载标签列表
                                 $("#current-page").text(num);
-                                loadCategoryList();
+                                loadTagList();
                             }
                         });
                     }else {
-                        loadCategoryList();
+                        loadTagList();
                     }
                 }
             });

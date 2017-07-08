@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<div class="am-u-sm-12">
+    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>名称</th>
+                <th>URL</th>
+                <th>描述</th>
+                <th>排序</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="gradeX" th:each="link : ${linkList}">
+                <td th:text="${link.id}"></td>
+                <td th:text="${link.name}"></td>
+                <td><a th:href="${link.url}" th:text="${link.url}" target="_blank" rel="noreferrer" style="cursor:pointer;display:inline !important;"></a></td>
+                <td th:text="${link.desc}"></td>
+                <td th:text="${link.sort}"></td>
+                <td th:text="${#dates.format(link.createTime,'yyyy年MM月dd日 HH:mm:ss')}"></td>
+                <td>
+                    <div class="tpl-table-black-operation">
+                        <a th:href="@{'javascript:linkEdit('+ ${link.id} +')'}">
+                            <i class="am-icon-pencil"></i> 编辑
+                        </a>
+                        <a th:href="@{'javascript:linkDelete('+ ${link.id} +')'}" class="tpl-table-black-operation-del">
+                            <i class="am-icon-trash"></i> 删除
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</html>

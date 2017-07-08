@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+    <div class="dialogTop">
+        <a href="javascript:tipClose();" class="claseDialogBtn">关闭</a>
+    </div>
+    <form id="editForm">
+        <ul class="editInfos">
+            <input type="text" id="id" name="id" hidden th:value="${not #lists.isEmpty(tag)} ? ${tag.id} : '0'">
+            <li><label>名称：<input type="text" id="name" name="name" th:value="${not #lists.isEmpty(tag)} ? ${tag.name} : ''" required value="true" class="ipt" /></label></li>
+            <li><input id ="saveButton" type="button" value="确认" onclick="saveTag()" class="submitBtn" /></li>
+        </ul>
+    </form>
+</html>

@@ -27,13 +27,13 @@ public class CategoryService{
         return categoryDao.insertList(pojos);
     }
 
+    public int update(Category pojo){
+        return categoryDao.update(pojo);
+    }
+
     public List<Category> loadCategory(Pager pager, String categoryName){
         PageHelper.offsetPage(pager.getStart(), pager.getLimit());
         return categoryDao.findByName(categoryName);
-    }
-
-    public int update(Category pojo){
-        return categoryDao.update(pojo);
     }
 
     public List<Category> findAll(){
