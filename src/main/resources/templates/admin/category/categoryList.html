@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head th:replace="admin/partial/head :: head"></head>
+<link rel="stylesheet" href="/assets/css/jQuery-tck.css" />
+
+<body data-type="widget">
+    <script src="/assets/js/theme.js"></script>
+    <div class="am-g tpl-g">
+        <!-- 头部 -->
+        <header th:replace="admin/partial/header :: header"></header>
+        <!-- 风格切换 -->
+        <div th:replace="admin/partial/skiner :: skiner"></div>
+        <!-- 侧边导航栏 -->
+        <!-- 侧边导航栏 -->
+        <div class="left-sidebar" th:fragment="leftside">
+            <!-- 用户信息 -->
+            <div class="tpl-sidebar-user-panel" >
+                <div class="tpl-user-panel-slide-toggleable">
+                    <div class="tpl-user-panel-profile-picture">
+                        <img src="/assets/img/user04.png" alt="">
+                    </div>
+                    <span class="user-panel-logged-in-text">
+                <i class="am-icon-circle-o am-text-success tpl-user-panel-status-icon"></i>
+                <span  th:text=" ${session.user.userName}"></span>
+            </span>
+                    <a href="javascript:;" class="tpl-user-panel-action-link"> <span class="am-icon-pencil"></span> 账号设置</a>
+                </div>
+            </div>
+
+            <!-- 菜单 -->
+            <ul class="sidebar-nav">
+                <li class="sidebar-nav-link">
+                    <a href="/admin">
+                        <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
+                    </a>
+                </li>
+
+                <li class="sidebar-nav-link">
+                    <a href="javascript:;" class="sidebar-nav-sub-title" class="active">
+                        <i class="am-icon-file-text-o sidebar-nav-link-logo"></i> 文章管理
+                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
+                        <li class="sidebar-nav-link">
+                            <a href="/admin/category/list" class="sub-active">
+                                <span class="am-icon-th-list sidebar-nav-link-logo"></span>分类管理
+                            </a>
+                        </li>
+                        <li class="sidebar-nav-link">
+                            <a href="/admin/tag/list">
+                                <span class="am-icon-tags sidebar-nav-link-logo"></span>标签管理
+                            </a>
+                        </li>
+                        <li class="sidebar-nav-link">
+                            <a href="/admin/article/list">
+                                <span class="am-icon-list-alt sidebar-nav-link-logo"></span>文章列表
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-nav-link">
+                    <a href="/admin/link/list">
+                        <i class="am-icon-group sidebar-nav-link-logo"></i> 友情链接
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 内容区域 -->
+    <div class="tpl-content-wrapper">
+        <div class="row-content am-cf">
+            <div class="row">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title  am-cf">文章分类</div>
+                        </div>
+                        <div class="widget-body  am-fr">
+                            <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                <div class="am-form-group">
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button type="button" onclick="categoryAdd()" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> 新增</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--搜索-->
+                            <div style="float: right" class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+                                <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+                                    <input type="text" id="keyword" class="am-form-field ">
+                                    <span class="am-input-group-btn">
+                                        <button id="category-search" class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"></button>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div id ="dataList" ></div>
+
+                            <div class="am-u-lg-12 am-cf">
+
+                                <div style="float: left" class="pagination">共
+                                    <span id="total-num"></span>
+                                    条记录
+                                    <span id="current-page"></span>
+                                    /
+                                    <span id="total-page"></span>
+                                </div>
+
+                                <div class="am-fr">
+                                    <ul class="am-pagination tpl-pagination" id="pagination">
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 维护信息弹窗 -->
+    <div id="dialogBg"></div>
+    <div id="dialog" class="animated">
+        <div class="dialogTop">
+            <a href="javascript:tipClose();" class="claseDialogBtn">关闭</a>
+        </div>
+        <form action="" method="POST" id="editForm">
+            <ul class="editInfos">
+                <input type="text" id="id" name="id" hidden th:value="${not #lists.isEmpty(category)} ? ${category.id} : '0'">
+                <li><label>名称：<input type="text" id="name" name="name" th:value="${not #lists.isEmpty(category)} ? ${category.name} : ''" required value="true" class="ipt" /></label></li>
+                <li><label>排序：<input type="text" id="sort" name="sort" th:value="${not #lists.isEmpty(category)} ? ${category.sort} : ''" required value="true" class="ipt" /></label></li>
+                <li><input type="submit" value="确认提交" onclick="saveCategory()" class="submitBtn" /></li>
+            </ul>
+        </form>
+    </div>
+
+    <script src="/assets/js/amazeui.min.js"></script>
+    <script src="/assets/js/amazeui.datatables.min.js"></script>
+    <script src="/assets/js/dataTables.responsive.min.js"></script>
+    <script src="/assets/js/app.js"></script>
+    <script src="/assets/js/jqPaginator.min.js"></script>
+    <script src="/assets/js/validation.js"></script>
+
+    <script type="text/javascript">
+    //<![CDATA[
+        //弹窗控件
+        var w,h,className;
+        function getSrceenWH(){
+            w = $(window).width();
+            h = $(window).height();
+            $('#dialogBg').width(w).height(h);
+        }
+        window.onresize = function(){
+            getSrceenWH();
+        }
+        $(window).resize();
+        $(function(){
+            getSrceenWH();
+        });
+        //进度条
+        var progress = $.AMUI.progress;
+
+        //初始化页面数据
+        $(function(){
+            initPage()
+        })
+
+        //点击新增按钮
+        function categoryAdd(){
+            className = "bounceIn";
+            tipOpen();
+        }
+
+        function tipOpen() {
+            $('#dialogBg').fadeIn(300);
+            $('#dialog').removeAttr('class').addClass('animated ' + className + '').fadeIn();
+        }
+
+        //关闭弹窗
+        function tipClose() {
+            $('#dialogBg').fadeOut(300, function () {
+                $('#dialog').addClass('bounceOutUp').fadeOut();
+            });
+        };
+
+        // 编辑分类
+        function saveCategory(){
+            if(validateCategory()){
+                $.ajax({
+                    url : '/admin/category/saveOrUpdate',
+                    data : encodeURI($("#editForm").serialize()),
+                    success  : function(data) {
+                        if(data.resultCode == 'success'){
+                            $('#editCategoryModal').modal('hide');
+                            loadCategoryList();
+                            tipClose();
+                        }else{
+                            alert(data.errorInfo,1000);
+                        }
+                    }
+                });
+            }
+        }
+
+        // 校验新增分类输入框
+        function validateCategory(){
+            var name = $("#name").val();
+            var sort = $("#sort").val();
+            if(!isEmpty(name)){
+                if(isSpecialSymbols(name)){
+                    alert("分类名称不能包含特殊符号");
+                    return false;
+                }
+            }else{
+                alert("分类名称不能为空");
+                return false;
+            }
+            if(!isEmpty(sort)){
+                if(!isNumber(sort)){
+                    alert("排序必须为数字");
+                    return false;
+                }
+            }else{
+                alert("排序不能为空");
+                return false;
+            }
+            return true;
+        }
+
+        // 加载分类列表
+        function loadCategoryList(){
+            progress.start();
+            // 收集参数
+            var keyword = $("#keyword").val();
+            var page = $("#current-page").text();
+            if(isEmpty(page) || page == 0){
+                page = 1;
+            }
+
+            // 查询列表
+            $.ajax({
+                url : '/admin/category/load',
+                data : 'page='+page+"&categoryName="+keyword,
+                success  : function(data) {
+                    $("#dataList").html(data);
+                }
+            });
+            progress.done();
+        }
+
+        // 搜索
+        $("#category-search").on("click",function () {
+            initPage();
+            loadCategoryList();
+        });
+
+        //初始化页面
+        function initPage() {
+            progress.start();
+            var keyword = $("#keyword").val();
+            var page = $("#current-page").val();
+            if (page==null || page ==0 ){
+                page = 1;
+            }
+            $.ajax({
+                url : '/admin/category/initPage',
+                data : 'page='+page+"&categoryName="+keyword,
+                success  : function(data) {
+                    $("#total-num").text(data.totalCount);
+                    $("#total-page").text(data.totalPageNum);
+                    $("#current-page").text(data.page);
+                    if (data.totalCount > 0) {
+                        $.jqPaginator('#pagination', {
+                            totalPages: data.totalPageNum,
+                            visiblePages: 5,
+                            currentPage: data.page,
+                            prev: '<li class="am-active"><a href="javascript:;">«</a></li>',
+                            next: '<li class="am-active"><a href="javascript:;">»</a></li>',
+                            page: '<li class="am-active"><a href="javascript:;">{{page}}</a></li>',
+                            onPageChange: function (num, type) {
+                                // 加载分类列表
+                                $("#current-page").text(num);
+                                loadCategoryList();
+                            }
+                        });
+                    }else {
+                        loadCategoryList();
+                    }
+                }
+            });
+            progress.done();
+        }
+
+    //]]>
+    </script>
+
+</body>
+
+</html>

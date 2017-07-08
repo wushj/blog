@@ -67,4 +67,16 @@ public class User extends BaseVO{
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "loginName='" + loginName + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", expired=" + expired +
+                ", locked=" + locked +
+                ", enabled=" + enabled +
+                '}';
+    }
 }

@@ -42,6 +42,10 @@ header {
   font-size: 22px;
   line-height: 55px;
 }
+.tpl-header-navbar-welcome {
+  text-align:center;
+  margin: 17px;
+}
 .tpl-header-switch-button:hover {
   outline: none;
 }

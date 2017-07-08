@@ -24,7 +24,7 @@
             <ul>
                 <!-- 欢迎语 -->
                 <li class="am-text-sm tpl-header-navbar-welcome">
-                    欢迎你 <span th:unless="${user} eq '' or ${user} eq null" th:text=" ${user.userName}"></span>
+                    欢迎你 <span th:text=" ${session.user.userName}"></span>
                 </li>
 
                 <!-- 新邮件 -->
