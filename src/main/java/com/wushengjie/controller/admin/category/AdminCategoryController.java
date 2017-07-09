@@ -77,7 +77,7 @@ public class AdminCategoryController {
                 categoryService.update(oldCategory);
             }
         }
-        return ResultInfoFactory.getSuccessResultInfo("删除分类成功！！！");
+        return ResultInfoFactory.getSuccessResultInfo("保存成功！！！");
     }
 
     /**

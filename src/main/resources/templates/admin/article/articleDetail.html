@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+    <div class="dialogTop">
+        <a href="javascript:tipClose();" class="claseDialogBtn">关闭</a>
+    </div>
+    <form id="editForm">
+        <ul class="editInfos">
+            <input type="text" id="id" name="id" hidden th:value="${not #strings.isEmpty(article.id)} ? ${article.id} : '0'">
+            <li><label>分类：
+                <select name="categoryId" id="categoryId" class="ipt">
+                    <option th:each="category : ${categoryList}"
+                            th:selected="${category.id == article.categoryId}"
+                            th:value="${category.id}" th:text="${category.name}"></option>
+                </select>
+            </label></li>
+            <li>
+                <label>标题：<input type="text" id="title" name="title" th:value="${article.title}" required value="true" class="ipt" /></label>
+            </li>
+            <li><label>状态：
+                <select name="status" id="status" class="ipt">
+                    <option value="1" th:selected="${article.status == null || article.status == 1}" th:text="正常"></option>
+                    <option value="2" th:selected="${article.status == 2 }" th:text="禁用"></option>
+                </select>
+            </label></li>
+            <li>
+                <label>描述：<input type="text" id="description" name="description" th:value="${article.description}" required value="true" class="ipt" /></label>
+            </li>
+            <li>
+                <label>作者：<input type="text" id="author" name="author" th:value="${article.author}" required value="true" class="ipt" /></label>
+            </li>
+            <li>
+                <input id ="saveButton" type="button" value="确认" onclick="saveArticle()" class="submitBtn" />
+            </li>
+        </ul>
+    </form>
+</html>

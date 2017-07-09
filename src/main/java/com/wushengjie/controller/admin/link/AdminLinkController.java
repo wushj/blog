@@ -76,7 +76,7 @@ public class AdminLinkController {
                 linkService.update(oldLink);
             }
         }
-        return ResultInfoFactory.getSuccessResultInfo("删除友情链接成功！！！");
+        return ResultInfoFactory.getSuccessResultInfo("保存成功！！！");
     }
 
     /**

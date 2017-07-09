@@ -76,7 +76,7 @@ public class AdminTagController {
                 tagService.update(oldTag);
             }
         }
-        return ResultInfoFactory.getSuccessResultInfo("删除标签成功！！！");
+        return ResultInfoFactory.getSuccessResultInfo("保存成功！！！");
     }
 
     /**

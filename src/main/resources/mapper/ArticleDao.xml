@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wushengjie.dao.ArticleDao">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="com.wushengjie.vo.Article">
+        <result column="CATEGORY_ID" property="categoryId"/>
+        <result column="CATEGORY_NAME" property="categoryName"/>
+        <result column="TITLE" property="title"/>
+        <result column="CONTENT" property="content"/>
+        <result column="DESCRIPTION" property="description"/>
+        <result column="STATUS" property="status"/>
+        <result column="AUTHOR" property="author"/>
+        <result column="UPDATE_TIME" property="updateTime"/>
+        <result column="SHOW_COUNT" property="showCount"/>
+        <result column="ID" property="id"/>
+        <result column="CREATE_TIME" property="createTime"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        `CATEGORY_ID`,
+        `TITLE`,
+        `CONTENT`,
+        `DESCRIPTION`,
+        `STATUS`,
+        `AUTHOR`,
+        `UPDATE_TIME`,
+        `SHOW_COUNT`,
+        `ID`,
+        `CREATE_TIME`
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO ARTICLE (
+            `CATEGORY_ID`,
+            `TITLE`,
+            `CONTENT`,
+            `DESCRIPTION`,
+            `STATUS`,
+            `AUTHOR`,
+            `UPDATE_TIME`,
+            `SHOW_COUNT`,
+            `ID`,
+            `CREATE_TIME`
+        ) VALUES (
+            #{pojo.categoryId},
+            #{pojo.title},
+            #{pojo.content},
+            #{pojo.description},
+            #{pojo.status},
+            #{pojo.author},
+            #{pojo.updateTime},
+            #{pojo.showCount},
+            #{pojo.id},
+            #{pojo.createTime}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO ARTICLE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.categoryId!=null"> `CATEGORY_ID`,</if>
+            <if test="pojo.title!=null"> `TITLE`,</if>
+            <if test="pojo.content!=null"> `CONTENT`,</if>
+            <if test="pojo.description!=null"> `DESCRIPTION`,</if>
+            <if test="pojo.status!=null"> `STATUS`,</if>
+            <if test="pojo.author!=null"> `AUTHOR`,</if>
+            <if test="pojo.updateTime!=null"> `UPDATE_TIME`,</if>
+            <if test="pojo.showCount!=null"> `SHOW_COUNT`,</if>
+            <if test="pojo.id!=null"> `ID`,</if>
+            <if test="pojo.createTime!=null"> `CREATE_TIME`,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.categoryId!=null">#{pojo.categoryId},</if>
+            <if test="pojo.title!=null">#{pojo.title},</if>
+            <if test="pojo.content!=null">#{pojo.content},</if>
+            <if test="pojo.description!=null">#{pojo.description},</if>
+            <if test="pojo.status!=null">#{pojo.status},</if>
+            <if test="pojo.author!=null">#{pojo.author},</if>
+            <if test="pojo.updateTime!=null">#{pojo.updateTime},</if>
+            <if test="pojo.showCount!=null">#{pojo.showCount},</if>
+            <if test="pojo.id!=null">#{pojo.id},</if>
+            <if test="pojo.createTime!=null">#{pojo.createTime},</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO ARTICLE (
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.categoryId},
+            #{pojo.title},
+            #{pojo.content},
+            #{pojo.description},
+            #{pojo.status},
+            #{pojo.author},
+            #{pojo.updateTime},
+            #{pojo.showCount},
+            #{pojo.id},
+            #{pojo.createTime}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE ARTICLE
+        <set>
+            <if test="pojo.categoryId != null"> `CATEGORY_ID` = #{pojo.categoryId}, </if>
+            <if test="pojo.title != null"> `TITLE` = #{pojo.title}, </if>
+            <if test="pojo.content != null"> `CONTENT` = #{pojo.content}, </if>
+            <if test="pojo.description != null"> `DESCRIPTION` = #{pojo.description}, </if>
+            <if test="pojo.status != null"> `STATUS` = #{pojo.status}, </if>
+            <if test="pojo.author != null"> `AUTHOR` = #{pojo.author}, </if>
+            <if test="pojo.updateTime != null"> `UPDATE_TIME` = #{pojo.updateTime}, </if>
+            <if test="pojo.showCount != null"> `SHOW_COUNT` = #{pojo.showCount}, </if>
+            <if test="pojo.id != null"> `ID` = #{pojo.id}, </if>
+            <if test="pojo.createTime != null"> `CREATE_TIME` = #{pojo.createTime} </if>
+        </set>
+        WHERE ID = #{pojo.id}
+    </update>
+
+    <!--auto generated by codehelper on 2017-07-08 12:47:13-->
+    <select id="findAll" resultMap="AllColumnMap">
+        select
+            A.*,B.NAME CATEGORY_NAME
+        from ARTICLE A
+            INNER JOIN CATEGORY B ON A.CATEGORY_ID = B.ID
+        from ARTICLE
+    </select>
+
+    <select id="initPage" resultType="int">
+        select count(id) from ARTICLE where `TITLE` like concat('%',#{title},'%')
+    </select>
+
+    <!--auto generated by codehelper on 2017-07-08 13:28:10-->
+    <select id="findByTitle" resultMap="AllColumnMap">
+        select
+            A.*,B.NAME CATEGORY_NAME
+        from ARTICLE A
+            INNER JOIN CATEGORY B ON A.CATEGORY_ID = B.ID
+        where A.TITLE like concat('%',#{title},'%')
+        ORDER BY A.ID
+    </select>
+
+    <!--auto generated by codehelper on 2017-07-08 16:31:26-->
+    <select id="findById" resultMap="AllColumnMap">
+        select
+            A.*,B.NAME CATEGORY_NAME
+        from ARTICLE A
+            INNER JOIN CATEGORY B ON A.CATEGORY_ID = B.ID
+        where A.ID=#{id}
+    </select>
+
+    <!--auto generated by codehelper on 2017-07-08 21:40:00-->
+    <delete id="deleteById">
+        delete from ARTICLE
+        where `ID`=#{id}
+    </delete>
+</mapper>
+

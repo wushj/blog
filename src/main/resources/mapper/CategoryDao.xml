@@ -81,7 +81,7 @@
     <select id="findAll" resultMap="AllColumnMap">
         select
         <include refid="all_column"/>
-        from CATEGORY
+        from CATEGORY order by SORT
     </select>
 
     <select id="initPage" resultType="int">

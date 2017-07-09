@@ -224,7 +224,7 @@
                     data : decodeURIComponent($("#editForm").serialize(),true),
                     success  : function(data) {
                         if(data.resultCode == 'success'){
-                            layer.msg('添加成功!', {
+                            layer.msg('保存成功!', {
                                 time: 1000 //1s后自动关闭
                             });
                             tipClose();
@@ -245,7 +245,6 @@
         function validateCategory(){
             var name = $("#name").val();
             var sort = $("#sort").val();
-            var url = $("#url").val();
             if(!isEmpty(name)){
                 if(isSpecialSymbols(name)){
                     layer.msg("分类名称不能包含特殊符号", {
@@ -268,19 +267,6 @@
                 }
             }else{
                 layer.msg("排序不能为空", {
-                    time: 1000 //1s后自动关闭
-                });
-                return false;
-            }
-            if(!isEmpty(url)){
-                if(!isUrl(url)){
-                    layer.msg("URL格式不正确", {
-                        time: 1000 //1s后自动关闭
-                    });
-                    return false;
-                }
-            }else{
-                layer.msg("URL不能为空", {
                     time: 1000 //1s后自动关闭
                 });
                 return false;
