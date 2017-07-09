@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+    <head>
+        <meta charset="utf-8" />
+        <title>编辑文章</title>
+        <link rel="stylesheet" href="/assets/editormd/css/style.css" />
+        <link rel="stylesheet" href="/assets/editormd/css/editormd.css" />
+        <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon" />
+    </head>
+    <body>
+        <div id="layout">
+            <header>
+                <h1 id="title" th:text="${article.title}"></h1>
+            </header>
+            <input id="article-id" th:value="${article.id}" hidden />
+
+            <!--编辑框-->
+            <div id="article-editormd">
+                <textarea style="display:none;" th:text="${article.content}"></textarea>
+            </div>
+
+        </div>
+        <script src="/assets/js/jquery.min.js"></script>
+        <script src="/assets/editormd/editormd.js"></script>
+        <script src="/assets/layer/layer.js"></script>
+        <script type="text/javascript">
+            var testEditor;
+
+            $(function () {
+                testEditor = editormd("article-editormd", {
+                    width: "99%",
+                    height: $(window).height()-20,
+                    path : '/assets/editormd/lib/',
+                    codeFold : true,
+                    //syncScrolling : false,
+                    saveHTMLToTextarea : false,    // 保存 HTML 到 Textarea
+                    searchReplace : true,
+                    //watch : false,                // 关闭实时预览
+                    htmlDecode : "style,script,<iframe,sub,sup,<embed,<div |onclick,title,onmouseover,onmouseout,style",            // 开启 HTML 标签解析，为了安全性，默认不开启
+                    //toolbar  : false,             //关闭工具栏
+                    //previewCodeHighlight : false, // 关闭预览 HTML 的代码块高亮，默认开启
+                    emoji : true,
+                    taskList : true,
+                    tocm: true,         // Using [TOCM]
+                    tex : true,                   // 开启科学公式TeX语言支持，默认关闭
+                    flowChart : true,             // 开启流程图支持，默认关闭
+                    sequenceDiagram : true,       // 开启时序/序列图支持，默认关闭,
+                    imageUpload : true,
+                    imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                    imageUploadURL : "/imageUpload",
+                    toolbarIcons : function() {
+                        return ["bold", "italic", "hr", "ucwords","uppercase", "lowercase", "list-ul", "list-ol", "|", "link", "reference-link", "image", "code", "code-block", "table","|", "datetime", "emoji", "pagebreak","|","goto-line", "watch", "preview", "search", "||", "post-article"]
+                    },
+                    toolbarIconTexts : {
+                        "post-article" : "保存"  // 如果没有图标，则可以这样直接插入内容，可以是字符串或HTML标签
+                    },
+                    // 自定义工具栏按钮的事件处理
+                    toolbarHandlers : {
+                        /**
+                         * @param {Object}      cm         CodeMirror对象
+                         * @param {Object}      icon       图标按钮jQuery元素对象
+                         * @param {Object}      cursor     CodeMirror的光标对象，可获取光标所在行和位置
+                         * @param {String}      selection  编辑器选中的文本
+                         */
+                        "post-article": function (cm, icon, cursor, selection) {
+
+                            //var cursor    = cm.getCursor();     //获取当前光标对象，同cursor参数
+                            //var selection = cm.getSelection();  //获取当前选中的文本，同selection参数
+
+                            // 替换选中文本，如果没有选中文本，则直接插入
+                            //cm.replaceSelection("[" + selection + ":testIcon]");
+
+                            // 如果当前没有选中的文本，将光标移到要输入的位置
+                            // if (selection === "") {
+                            //     cm.setCursor(cursor.line, cursor.ch + 1);
+                            // }
+
+                            // this == 当前editormd实例
+                            // console.log("testIcon =>", this, cm, icon, cursor, selection);
+                            saveContent();
+                        },
+                    },
+                    onload : function() {
+                        //this.fullscreen();
+                        //this.unwatch();
+                        //this.watch().fullscreen();
+
+                        //this.setMarkdown("#PHP");
+                        //this.width("100%");
+                        //this.height(480);
+                        //this.resize("100%", 640);
+                    }
+                });
+
+            });
+
+            function saveContent() {
+                var data = new Object();
+                data.id = $("#article-id").val();
+                data.content = testEditor.getMarkdown();
+                $.ajax({
+                    url : '/admin/article/updateContent',
+                    data : data,
+                    success  : function(data) {
+                        if(data.resultCode == 'success'){
+                            layer.confirm('保存成功，是否返回列表？', {
+                                btn: ['确定','取消'] //按钮
+                            }, function(){
+                                window.location.href = "/admin/article/list";;
+                            }, function(){
+                                layer.close();
+                            });
+                        }else{
+                            layer.msg(data.errorInfo, {
+                                time: 1000 //1s后自动关闭
+                            });
+                        }
+                    }
+                });
+            }
+
+        </script>
+    </body>
+</html>

@@ -31,10 +31,10 @@
                 <td>
                     <div class="tpl-table-black-operation">
                         <a th:href="@{'javascript:articleEdit('+ ${article.id} +')'}">
-                            <i class="am-icon-pencil"></i>修改文章信息
+                            <i class="am-icon-pencil"></i>修改信息
                         </a>
-                        <a th:href="@{'javascript:articleContentEdit('+ ${article.id} +')'}">
-                            <i class="am-icon-file-text"></i>编辑文章内容
+                        <a th:href="@{'/admin/article/editContent/'+ ${article.id} }">
+                            <i class="am-icon-file-text"></i>编辑文章
                         </a>
                         <a th:href="@{'javascript:articleDelete('+ ${article.id} +')'}" class="tpl-table-black-operation-del">
                             <i class="am-icon-trash"></i> 删除

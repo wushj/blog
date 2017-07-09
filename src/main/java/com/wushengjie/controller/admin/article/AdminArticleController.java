@@ -87,6 +87,20 @@ public class AdminArticleController {
     }
 
     /**
+     * 保存文章内容
+     * @return
+     */
+    @RequestMapping("/updateContent")
+    @ResponseBody
+    public ResultInfo updateContent(Article article){
+        Article oldArticle = articleService.findById(article.getId());
+        oldArticle.setContent(article.getContent());
+        oldArticle.setUpdateTime(new Date());
+        articleService.update(oldArticle);
+        return ResultInfoFactory.getSuccessResultInfo("保存成功！！！");
+    }
+
+    /**
      * 跳转到添加页面
      * @return
      */
@@ -124,7 +138,7 @@ public class AdminArticleController {
     public String editContent(@PathVariable Integer id, Model model){
         Article article = articleService.findById(id);
         model.addAttribute("article",article);
-        return "admin/article/editContent";
+        return "admin/article/articleContent";
     }
 
     /**

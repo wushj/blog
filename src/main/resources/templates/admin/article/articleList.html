@@ -346,18 +346,6 @@
         });
         progress.done();
     }
-
-    //编辑文章详情
-    function articleEdit(id){
-        $.ajax({
-            url : '/admin/article/editContent/'+id,
-            method:"GET",
-            success  : function(data) {
-                $('#dialog').html(data);
-            }
-        });
-    }
-
     //]]>
 </script>
 
