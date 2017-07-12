@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="zh">
 <head th:replace="admin/partial/head :: head"></head>
-<link rel="stylesheet" href="/assets/css/jQuery-tck.css" />
+<link rel="stylesheet" href="/assets/admin/css/jQuery-tck.css" />
 
 <body data-type="widget">
-    <script src="/assets/js/theme.js"></script>
+    <script src="/assets/admin/js/theme.js"></script>
     <div class="am-g tpl-g">
         <!-- 头部 -->
         <header th:replace="admin/partial/header :: header"></header>
@@ -14,18 +14,7 @@
         <!-- 侧边导航栏 -->
         <div class="left-sidebar" th:fragment="leftside">
             <!-- 用户信息 -->
-            <div class="tpl-sidebar-user-panel" >
-                <div class="tpl-user-panel-slide-toggleable">
-                    <div class="tpl-user-panel-profile-picture">
-                        <img src="/assets/img/avatar.jpg" alt="">
-                    </div>
-                    <span class="user-panel-logged-in-text">
-                <i class="am-icon-circle-o am-text-success tpl-user-panel-status-icon"></i>
-                <span  th:text=" ${session.user.userName}"></span>
-            </span>
-                    <a href="javascript:;" class="tpl-user-panel-action-link"> <span class="am-icon-pencil"></span> 账号设置</a>
-                </div>
-            </div>
+            <head th:replace="admin/partial/userInfo :: userInfo"></head>
 
             <!-- 菜单 -->
             <ul class="sidebar-nav">
@@ -126,10 +115,10 @@
     <div id="dialogBg"></div>
     <div id="dialog" class="animated"></div>
 
-    <script src="/assets/js/amazeui.min.js"></script>
-    <script src="/assets/js/amazeui.datatables.min.js"></script>
-    <script src="/assets/js/dataTables.responsive.min.js"></script>
-    <script src="/assets/js/app.js"></script>
+    <script src="/assets/admin/js/amazeui.min.js"></script>
+    <script src="/assets/admin/js/amazeui.datatables.min.js"></script>
+    <script src="/assets/admin/js/dataTables.responsive.min.js"></script>
+    <script src="/assets/admin/js/app.js"></script>
     <script src="/assets/js/jqPaginator.min.js"></script>
     <script src="/assets/js/validation.js"></script>
 
