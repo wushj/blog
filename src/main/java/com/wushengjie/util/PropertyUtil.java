@@ -20,14 +20,6 @@ public class PropertyUtil {
     @Value("${aliYun.oss.dir}")
     private String dir;
 
-    @Value("${mail.host}")
-    private String mailHost;
-    @Value("${mail.port}")
-    private Integer mailPort;
-    @Value("${mail.username}")
-    private String mailUsername;
-    @Value("${mail.password}")
-    private String mailPassword;
     @Value("${mail.from}")
     private String mailFrom;
     @Value("${mail.to}")
@@ -51,22 +43,6 @@ public class PropertyUtil {
 
     public String getDir() {
         return dir;
-    }
-
-    public String getMailHost() {
-        return mailHost;
-    }
-
-    public Integer getMailPort() {
-        return mailPort;
-    }
-
-    public String getMailUsername() {
-        return mailUsername;
-    }
-
-    public String getMailPassword() {
-        return mailPassword;
     }
 
     public String getMailFrom() {

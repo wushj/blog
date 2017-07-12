@@ -1,7 +1,6 @@
 package com.wushengjie.config.aop;
 
 import com.wushengjie.util.DateUtil;
-import com.wushengjie.util.MailUtils;
 import com.wushengjie.util.PropertyUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -10,6 +9,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -22,8 +22,6 @@ import java.util.Date;
 @Component
 public class ErrorAspect {
 
-    @Autowired
-    private  MailUtils mailUtils;
     @Autowired
     private PropertyUtil propertyUtil;
 
@@ -53,32 +51,50 @@ public class ErrorAspect {
         String errorMessege = String.valueOf(e.getMessage());
 
         String title = "Error Log";
-        String receiver = propertyUtil.getMailTo();
-        String html = "<html><head></head><body>"
-                        + "<div style=\"padding-left:20px\">"
-                        + "<table border=\"1px\" cellspacing=\"0px\" style=\"border-collapse:collapse\">"
-                        + "<tr>"
-                        + "<td>ip</td><td>"+ip+"</td>"
-                        + "</tr>"
-                        + "<tr>"
-                        + "<td>method</td><td>"+method+"</td>"
-                        + "</tr>"
-                        + "<tr>"
-                        + "<td>requestURL</td><td>"+requestURL+"</td>"
-                        + "</tr>"
-                        + "<tr>"
-                        + "<td>args</td><td>"+args+"</td>"
-                        + "</tr>"
-                        + "<tr>"
-                        + "<td>classMethod</td><td>"+classMethod+"</td>"
-                        + "</tr>"
-                        + "<tr>"
-                        + "<td>time</td><td>"+time+"</td>"
-                        + "</tr>"
-                        + "</table></div>"
-                        + "<p>"+errorMessege+"</p>"
-                        + "</body></html>";
-        mailUtils.sendHtmlMail(title,receiver,html);
+        String html = biuldHtml(ip, method, requestURL, args, classMethod, time, errorMessege);
+        //发送邮件
+        sendMail(title, html);
         logger.error(errorMessege);
+    }
+
+    /**
+     * 发送邮件
+     * @param title
+     * @param html
+     */
+    private void sendMail(String title, String html) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(propertyUtil.getMailFrom());
+        message.setTo(propertyUtil.getMailTo());
+        message.setSubject(title);
+        message.setText(html);
+    }
+
+
+    private String biuldHtml(String ip, String method, String requestURL, String args, String classMethod, String time, String errorMessege) {
+        return "<html><head></head><body>"
+                            + "<div style=\"padding-left:20px\">"
+                            + "<table border=\"1px\" cellspacing=\"0px\" style=\"border-collapse:collapse\">"
+                            + "<tr>"
+                            + "<td>ip</td><td>"+ip+"</td>"
+                            + "</tr>"
+                            + "<tr>"
+                            + "<td>method</td><td>"+method+"</td>"
+                            + "</tr>"
+                            + "<tr>"
+                            + "<td>requestURL</td><td>"+requestURL+"</td>"
+                            + "</tr>"
+                            + "<tr>"
+                            + "<td>args</td><td>"+args+"</td>"
+                            + "</tr>"
+                            + "<tr>"
+                            + "<td>classMethod</td><td>"+classMethod+"</td>"
+                            + "</tr>"
+                            + "<tr>"
+                            + "<td>time</td><td>"+time+"</td>"
+                            + "</tr>"
+                            + "</table></div>"
+                            + "<p>"+errorMessege+"</p>"
+                            + "</body></html>";
     }
 }

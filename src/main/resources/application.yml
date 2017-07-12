@@ -6,14 +6,7 @@ aliYun:
     accesskeySecret: mIQJ8U0kzqEekHpWNPZuHMaGC4q9tz
     bucketName: wushengjie
     dir: blog/img/
-#邮件配置
-mail:
-  host: smtp.163.com
-  port: 465
-  username: fjfjfj0851
-  password: fjfjfj0851
-  from: fjfjfj0851@163.com
-  to: fjfjfj0851@163.com
+
 #spring配置
 spring:
   #数据源
@@ -27,7 +20,18 @@ spring:
     cache: false
     #启用不严格检查html
     mode: LEGACYHTML5
-
+  #邮件配置
+  mail:
+    host: smtp.163.com
+    username: fjfjfj0851@163.com
+    password: fjfjfj0851
+    properties:mail:smtp:auth: true
+    properties:mail:smtp:starttls:enable: true
+    properties:mail:smtp:starttls:required: true
+#邮件发送接收方
+mail:
+  from: fjfjfj0851@163.com
+  to: fjfjfj0851@163.com
 #加载log4j2
 logging:
   config: classpath:log4j2.xml
