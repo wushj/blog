@@ -35,4 +35,9 @@ public class HomeCotroller {
     public String single(){
         return "single";
     }
+
+    @RequestMapping("baidu_verify_EgpaoPoSSd")
+    public String baidu_verify_EgpaoPoSSd(){
+        return "baidu_verify_EgpaoPoSSd";
+    }
 }
