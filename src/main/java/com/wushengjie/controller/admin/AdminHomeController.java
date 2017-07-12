@@ -33,15 +33,6 @@ public class AdminHomeController {
     private UserService userService;
 
     /**
-     * 首页
-     * @return
-     */
-    @RequestMapping("/")
-    public String index(){
-        return "admin/login";
-    }
-
-    /**
      * 登陆
      * @return
      */
