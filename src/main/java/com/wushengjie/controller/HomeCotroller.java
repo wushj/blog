@@ -26,5 +26,13 @@ public class HomeCotroller {
         return "archive";
     }
 
+    @RequestMapping("details")
+    public String details(){
+        return "details";
+    }
 
+    @RequestMapping("single")
+    public String single(){
+        return "single";
+    }
 }

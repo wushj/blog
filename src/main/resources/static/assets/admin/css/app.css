@@ -731,7 +731,7 @@ ul.tpl-dropdown-content .tpl-dropdown-menu-messages-item .menu-messages-content 
   padding: 6px 0;
 }
 .theme-white .tpl-login-logo {
-  background: url(../img/bkdLoginLogo.png) center no-repeat;
+  background: url(/assets/img/bkdLoginLogo.png) center no-repeat;
 }
 .theme-white .sub-active {
   color: #23abf0!important;
@@ -1342,7 +1342,7 @@ ul.tpl-dropdown-content .tpl-dropdown-menu-messages-item .menu-messages-content 
   padding: 6px 0;
 }
 .theme-black .tpl-login-logo {
-  background: url(../img/bkdLoginLogo.png) center no-repeat;
+  background: url(/assets/img/bkdLoginLogo.png) center no-repeat;
 }
 .theme-black .tpl-table-line-img {
   max-width: 100px;
