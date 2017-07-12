@@ -29,10 +29,20 @@ public class UserService{
         return userDao.update(pojo);
     }
 
+    /**
+     * 根据用户名查询用户
+     * @param userName
+     * @return
+     */
     public List<User> findByUserName(String userName){
         return userDao.findByUserName(userName);
     }
 
+    /**
+     * 根据登陆名查询用户
+     * @param userName
+     * @return
+     */
     public User findByLoginName(String userName){
         return userDao.findByLoginName(userName);
     }

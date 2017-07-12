@@ -3,6 +3,7 @@ package com.wushengjie.util;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -19,19 +20,12 @@ import java.util.Random;
  */
 @Component
 public class AliYunOssUtil {
-    @Value("${aliYun.oss.endpoint}")
-    private String ENDPOINT;
-    @Value("${aliYun.oss.accesskeyId}")
-    private String ACCESSKEYID;
-    @Value("${aliYun.oss.accesskeySecret}")
-    private String ACCESSKEYSECRET;
-    @Value("${aliYun.oss.bucketName}")
-    private String BUCKETNAME;
-    @Value("${aliYun.oss.dir}")
-    private String DIR;
+
+    @Autowired
+    private PropertyUtil propertyUtil;
 
     public OSSClient getOssClientInstance(){
-         return new OSSClient(ENDPOINT, ACCESSKEYID, ACCESSKEYSECRET);
+         return new OSSClient(propertyUtil.getEndPoint(), propertyUtil.getAccesskeyId(), propertyUtil.getAccesskeySecret());
     }
 
     /**
@@ -116,7 +110,7 @@ public class AliYunOssUtil {
             objectMetadata.setContentType(getcontentType(fileName.substring(fileName.lastIndexOf("."))));
             objectMetadata.setContentDisposition("inline;filename=" + fileName);
             //上传文件
-            PutObjectResult putResult = ossClient.putObject(BUCKETNAME, DIR + fileName, instream, objectMetadata);
+            PutObjectResult putResult = ossClient.putObject(propertyUtil.getBucketName(), propertyUtil.getDir() + fileName, instream, objectMetadata);
             ret = putResult.getETag();
          } finally {
             if (instream != null) {
@@ -176,7 +170,7 @@ public class AliYunOssUtil {
      * @return
      */
     public String getUnSignUrl(String key) {
-        return "http://"+ BUCKETNAME + "." + ENDPOINT + "/" + DIR + key;
+        return "http://"+ propertyUtil.getBucketName() + "." + propertyUtil.getEndPoint() + "/" + propertyUtil.getDir() + key;
     }
 
     /**
@@ -190,7 +184,7 @@ public class AliYunOssUtil {
         // 设置URL过期时间为10年  3600l* 1000*24*365*10
         Date expiration = new Date(new Date().getTime() + 3600l * 1000 * 24 * 365 * 10);
         // 生成URL
-        URL url = ossClient.generatePresignedUrl(BUCKETNAME, key, expiration);
+        URL url = ossClient.generatePresignedUrl(propertyUtil.getBucketName(), key, expiration);
         destory(ossClient);
         if (url != null) {
             return url.toString();

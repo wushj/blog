@@ -6,6 +6,14 @@ aliYun:
     accesskeySecret: mIQJ8U0kzqEekHpWNPZuHMaGC4q9tz
     bucketName: wushengjie
     dir: blog/img/
+#邮件配置
+mail:
+  host: smtp.163.com
+  port: 465
+  username: fjfjfj0851
+  password: fjfjfj0851
+  from: fjfjfj0851@163.com
+  to: fjfjfj0851@163.com
 #spring配置
 spring:
   #数据源

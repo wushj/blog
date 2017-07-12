@@ -76,13 +76,7 @@ public class AdminArticleController {
     @RequestMapping("/inertOrUpdate")
     @ResponseBody
     public ResultInfo inertOrUpdate(Article article){
-        if(0 == article.getId()){
-            article.setCreateTime(new Date());
-            articleService.insertSelective(article);
-        }else{
-            article.setUpdateTime(new Date());
-            articleService.update(article);
-        }
+
         return ResultInfoFactory.getSuccessResultInfo("保存成功！！！");
     }
 

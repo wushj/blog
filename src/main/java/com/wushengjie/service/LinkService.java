@@ -31,24 +31,49 @@ public class LinkService{
         return linkDao.update(pojo);
     }
 
-    public List<Link> loadLink(Pager pager, String tagName){
-        PageHelper.offsetPage(pager.getStart(), pager.getLimit());
-        return linkDao.findByNameOrUrl(tagName);
-    }
-
-    public List<Link> findAll(){
-        return linkDao.findAll();
-    }
-
+    /**
+     * 根据名称或url初始化分页
+     * @param pager
+     * @param tagName
+     */
     public void initPage(Pager pager,String tagName){
         int count = linkDao.initPage(pager,tagName);
         pager.setTotalCount(count);
     }
 
+    /**
+     *根据名称或url加载分页
+     * @param pager
+     * @param tagName
+     * @return
+     */
+    public List<Link> loadLink(Pager pager, String tagName){
+        PageHelper.offsetPage(pager.getStart(), pager.getLimit());
+        return linkDao.findByNameOrUrl(tagName);
+    }
+
+    /**
+     * 获取所有友情链接
+     * @return
+     */
+    public List<Link> findAll(){
+        return linkDao.findAll();
+    }
+
+    /**
+     * 根据ID查询友情链接
+     * @param id
+     * @return
+     */
     public Link findById(Integer id){
         return linkDao.findById(id);
     }
 
+    /**
+     * 根据ID删除友情链接
+     * @param id
+     * @return
+     */
     public int deleteById(Integer id){
         return linkDao.deleteById(id);
     }

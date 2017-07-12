@@ -701,6 +701,12 @@ The blog main page boxes
   }
 }
 
+.blog-teaser .teaser-details {
+  text-align: left;
+  padding-top : 20px;
+  padding-left : 50px;
+}
+
 .blog-teaser header {
   text-align: center;
 }

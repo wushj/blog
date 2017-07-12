@@ -26,4 +26,7 @@ public interface ArticleDao {
     Article findById(@Param("id")Integer id);
 
     int deleteById(@Param("id")Integer id);
+
+    List<Article> findByCategoryId(@Param("categoryId")Integer categoryId);
+
 }
