@@ -18,7 +18,7 @@ public class Article extends BaseVO{
 
     private String description; //描述
 
-    private Integer status;  //状态
+    private Integer status;  //状态 0正常 1禁用
 
     private String author; //作者
 

@@ -18,8 +18,8 @@
             </li>
             <li><label>状态：
                 <select name="status" id="status" class="ipt">
-                    <option value="1" th:selected="${article.status == null || article.status == 1}" th:text="正常"></option>
-                    <option value="2" th:selected="${article.status == 2 }" th:text="禁用"></option>
+                    <option value="0" th:selected="${article.status == null || article.status == 0}" th:text="正常"></option>
+                    <option value="1" th:selected="${article.status == 1}" th:text="禁用"></option>
                 </select>
             </label></li>
             <li>

@@ -4,33 +4,26 @@
 <body>
     <!--头部-->
     <header th:replace="partial/header :: header"></header>
-
-
     <div class="widewrapper main">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 blog-main">
                     <article class="blog-post">
                         <header>
-                           
                             <!--<div class="lead-image">
                                 <img src="..//assets/img/single-post.jpg" alt="" class="img-responsive">
                             </div>-->
                         </header>
                         <div class="body">
-                            <h1>Responsive HTML5 Template</h1>
+                            <h1 th:text="${article.title}"></h1>
                             <div class="meta">
-                                <i class="fa fa-user"></i> John Doe <i class="fa fa-calendar"></i>23 Agustus 2015<i class="fa fa-comments"></i><span class="data"><a href="#comments">3 Comments</a></span>
+                                <i class="fa fa-calendar" th:text="'&nbsp;' + ${#dates.format(article.createTime,'yyyy-MM-dd')}"></i>
+                                <i class="fa fa-user" th:text="'&nbsp;' + ${article.author}"></i>
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem quas voluptatem et minima quo amet ducimus. Voluptatum soluta tenetur ducimus fugiat, sint voluptate eveniet adipisci nulla asperiores distinctio laudantium eos. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident tenetur, consectetur dolores nostrum, numquam facere a dicta eum nam suscipit consequuntur dolorem aspernatur molestias vero quo id tempore vel possimus.</p>
-
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem quas voluptatem et minima quo amet ducimus. Voluptatum soluta tenetur ducimus fugiat, sint voluptate eveniet adipisci nulla asperiores distinctio laudantium eos. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident tenetur, consectetur dolores nostrum, numquam facere a dicta eum nam suscipit consequuntur dolorem aspernatur molestias vero quo id tempore vel possimus.</p>
-
-
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem quas voluptatem et minima quo amet ducimus. Voluptatum soluta tenetur ducimus fugiat, sint voluptate eveniet adipisci nulla asperiores distinctio laudantium eos. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident tenetur, consectetur dolores nostrum, numquam facere a dicta eum nam suscipit consequuntur dolorem aspernatur molestias vero quo id tempore vel possimus.</p>
-
-                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem quas voluptatem et minima quo amet ducimus. Voluptatum soluta tenetur ducimus fugiat, sint voluptate eveniet adipisci nulla asperiores.</p>
-
+                            <!--详情-->
+                            <div id="article-content" class="body">
+                                <textarea id="append-test" style="display:none;" th:utext="${article.content}"></textarea>
+                            </div>
                         </div>
                     </article>
 
@@ -150,58 +143,9 @@
                         </form>
                     </aside>
                 </div>
-                <aside class="col-md-4 blog-aside">
-                    
-                    <div class="aside-widget">
-                        <header>
-                            <h3>Featured Post</h3>
-                        </header>
-                        <div class="body">
-                            <ul class="clean-list">
-                                <li><a href="">Clean - Responsive HTML5 Template</a></li>
-                                <li><a href="">Responsive Pricing Table</a></li>
-                                <li><a href="">Yellow HTML5 Template</a></li>
-                                <li><a href="">Blackor Responsive Theme</a></li>
-                                <li><a href="">Portfolio Bootstrap Template</a></li>
-                                <li><a href="">Clean Slider Template</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                
-                    <div class="aside-widget">
-                        <header>
-                            <h3>Related Post</h3>
-                        </header>
-                        <div class="body">
-                            <ul class="clean-list">
-                                <li><a href="">Blackor Responsive Theme</a></li>
-                                <li><a href="">Portfolio Bootstrap Template</a></li>
-                                <li><a href="">Clean Slider Template</a></li>
-                                <li><a href="">Clean - Responsive HTML5 Template</a></li>
-                                <li><a href="">Responsive Pricing Table</a></li>
-                                <li><a href="">Yellow HTML5 Template</a></li>
-                            </ul>
-                        </div>
-                    </div>
 
-                    <div class="aside-widget">
-                        <header>
-                            <h3>Tags</h3>
-                        </header>
-                        <div class="body clearfix">
-                            <ul class="tags">
-                                <li><a href="#">HTML5</a></li>
-                                <li><a href="#">CSS3</a></li>
-                                <li><a href="#">COMPONENTS</a></li>
-                                <li><a href="#">TEMPLATE</a></li>
-                                <li><a href="#">PLUGIN</a></li>
-                                <li><a href="#">BOOTSTRAP</a></li>
-                                <li><a href="#">TUTORIAL</a></li>
-                                <li><a href="#">UI/UX</a></li>                            
-                            </ul>
-                        </div>
-                    </div>
-                </aside>
+                <div id ="sider"></div>
+
             </div>
         </div>
     </div>
@@ -209,12 +153,19 @@
     <!--尾部-->
     <footer th:replace="partial/footer :: footer"></footer>
 
-    <!--自定义js-->
-    <script src="/assets/js/index.js"></script>
-
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <script src="/assets/js/modernizr.js"></script>
-
+    <script src="/assets/editormd/editormd.js"></script>
+    <script src="/assets/editormd/lib/marked.min.js"></script>
+    <script src="/assets/editormd/lib/prettify.min.js"></script>
+    <script src="/assets/editormd/lib/raphael.min.js"></script>
+    <script src="/assets/editormd/lib/underscore.min.js"></script>
+    <script src="/assets/editormd/lib/sequence-diagram.min.js"></script>
+    <script src="/assets/editormd/lib/flowchart.min.js"></script>
+    <script src="/assets/editormd/lib/jquery.flowchart.min.js"></script>
+    <!--自定义js-->
+    <script src="/assets/js/article.js"></script>
+    <script src="/assets/js/sider.js"></script>
 </body>
 </html>

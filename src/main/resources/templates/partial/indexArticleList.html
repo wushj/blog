@@ -1,31 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<div class="col-md-8 blog-main" th:fragment="indexArticleList">
-    <div class="row">
-        <div class="col-md-6 col-sm-6" th:each="article,stat : ${articleList}" th:id="'/article/'+${article.id}">
-            <article class="blog-teaser">
-                <header>
-                    <h3><a th:href="'/article/'+${article.id}" th:text="${article.title}"></a></h3>
-                    <span class="meta" th:text="${#dates.format(article.createTime,'yyyy-MM-dd')} + ','+ ${article.author} "></span>
-                    <hr>
-                </header>
-                <div id="article-content" class="body">
-                    <textarea id="append-test" style="display:none;" th:utext="${article.content}"></textarea>
-                </div>
-                <div class="clearfix">
-                    <a th:href="'/article/'+${article.id}" class="btn btn-clean-one">查看更多</a>
-                </div>
-            </article>
-        </div>
-    </div>
-
-    <div style="float: left" class="pagination" style="display:none">共
-        <span id="total-num"></span>
-        <span id="current-page"></span>
-        <span id="total-page"></span>
-    </div>
-
-    <div class="paging pagination" id="pagination">
-
+<div class="row">
+    <div class="col-md-6 col-sm-6" th:each="article,stat : ${articleList}" th:id="'/article/'+${article.id}">
+        <article class="blog-teaser">
+            <header class="meta">
+                <h3><a th:href="'/article/'+${article.id}" th:text="${article.title}"></a></h3>
+                <i class="fa fa-calendar" th:text="'&nbsp;' + ${#dates.format(article.createTime,'yyyy-MM-dd')}"></i>
+                <i class="fa fa-user" th:text="'&nbsp;' + ${article.author}"></i>
+                <hr>
+            </header>
+            <div id="article-content" class="body markdown-body editormd-html-preview" th:utext="${article.content}">
+            </div>
+            <div class="clearfix">
+                <a th:href="'/article/'+${article.id}" class="btn btn-clean-one">More</a>
+            </div>
+        </article>
     </div>
 </div>

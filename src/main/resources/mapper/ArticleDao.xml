@@ -18,31 +18,31 @@
 
     <!--auto generated Code-->
     <sql id="all_column">
-        `CATEGORY_ID`,
-        `TITLE`,
-        `CONTENT`,
-        `DESCRIPTION`,
-        `STATUS`,
-        `AUTHOR`,
-        `UPDATE_TIME`,
-        `SHOW_COUNT`,
-        `ID`,
-        `CREATE_TIME`
+        CATEGORY_ID,
+        TITLE,
+        CONTENT,
+        DESCRIPTION,
+        STATUS,
+        AUTHOR,
+        UPDATE_TIME,
+        SHOW_COUNT,
+        ID,
+        CREATE_TIME
     </sql>
 
     <!--auto generated Code-->
     <insert id="insert" useGeneratedKeys="true" keyProperty="pojo.id">
         INSERT INTO ARTICLE (
-            `CATEGORY_ID`,
-            `TITLE`,
-            `CONTENT`,
-            `DESCRIPTION`,
-            `STATUS`,
-            `AUTHOR`,
-            `UPDATE_TIME`,
-            `SHOW_COUNT`,
-            `ID`,
-            `CREATE_TIME`
+            CATEGORY_ID,
+            TITLE,
+            CONTENT,
+            DESCRIPTION,
+            STATUS,
+            AUTHOR,
+            UPDATE_TIME,
+            SHOW_COUNT,
+            ID,
+            CREATE_TIME
         ) VALUES (
             #{pojo.categoryId},
             #{pojo.title},
@@ -61,16 +61,16 @@
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
         INSERT INTO ARTICLE
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="pojo.categoryId!=null"> `CATEGORY_ID`,</if>
-            <if test="pojo.title!=null"> `TITLE`,</if>
-            <if test="pojo.content!=null"> `CONTENT`,</if>
-            <if test="pojo.description!=null"> `DESCRIPTION`,</if>
-            <if test="pojo.status!=null"> `STATUS`,</if>
-            <if test="pojo.author!=null"> `AUTHOR`,</if>
-            <if test="pojo.updateTime!=null"> `UPDATE_TIME`,</if>
-            <if test="pojo.showCount!=null"> `SHOW_COUNT`,</if>
-            <if test="pojo.id!=null"> `ID`,</if>
-            <if test="pojo.createTime!=null"> `CREATE_TIME`,</if>
+            <if test="pojo.categoryId!=null"> CATEGORY_ID,</if>
+            <if test="pojo.title!=null"> TITLE,</if>
+            <if test="pojo.content!=null"> CONTENT,</if>
+            <if test="pojo.description!=null"> DESCRIPTION,</if>
+            <if test="pojo.status!=null"> STATUS,</if>
+            <if test="pojo.author!=null"> AUTHOR,</if>
+            <if test="pojo.updateTime!=null"> UPDATE_TIME,</if>
+            <if test="pojo.showCount!=null"> SHOW_COUNT,</if>
+            <if test="pojo.id!=null"> ID,</if>
+            <if test="pojo.createTime!=null"> CREATE_TIME,</if>
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -112,16 +112,16 @@
     <update id="update">
         UPDATE ARTICLE
         <set>
-            <if test="pojo.categoryId != null"> `CATEGORY_ID` = #{pojo.categoryId}, </if>
-            <if test="pojo.title != null"> `TITLE` = #{pojo.title}, </if>
-            <if test="pojo.content != null"> `CONTENT` = #{pojo.content}, </if>
-            <if test="pojo.description != null"> `DESCRIPTION` = #{pojo.description}, </if>
-            <if test="pojo.status != null"> `STATUS` = #{pojo.status}, </if>
-            <if test="pojo.author != null"> `AUTHOR` = #{pojo.author}, </if>
-            <if test="pojo.updateTime != null"> `UPDATE_TIME` = #{pojo.updateTime}, </if>
-            <if test="pojo.showCount != null"> `SHOW_COUNT` = #{pojo.showCount}, </if>
-            <if test="pojo.id != null"> `ID` = #{pojo.id}, </if>
-            <if test="pojo.createTime != null"> `CREATE_TIME` = #{pojo.createTime} </if>
+            <if test="pojo.categoryId != null"> CATEGORY_ID = #{pojo.categoryId}, </if>
+            <if test="pojo.title != null"> TITLE = #{pojo.title}, </if>
+            <if test="pojo.content != null"> CONTENT = #{pojo.content}, </if>
+            <if test="pojo.description != null"> DESCRIPTION = #{pojo.description}, </if>
+            <if test="pojo.status != null"> STATUS = #{pojo.status}, </if>
+            <if test="pojo.author != null"> AUTHOR = #{pojo.author}, </if>
+            <if test="pojo.updateTime != null"> UPDATE_TIME = #{pojo.updateTime}, </if>
+            <if test="pojo.showCount != null"> SHOW_COUNT = #{pojo.showCount}, </if>
+            <if test="pojo.id != null"> ID = #{pojo.id}, </if>
+            <if test="pojo.createTime != null"> CREATE_TIME = #{pojo.createTime} </if>
         </set>
         WHERE ID = #{pojo.id}
     </update>
@@ -132,11 +132,19 @@
             A.*,B.NAME CATEGORY_NAME
         from ARTICLE A
             INNER JOIN CATEGORY B ON A.CATEGORY_ID = B.ID
+        WHERE A.STATUS = 0
         ORDER BY A.CREATE_TIME DESC
     </select>
 
     <select id="initPage" resultType="int">
-        select count(id) from ARTICLE where `TITLE` like concat('%',#{title},'%')
+        select count(id) from ARTICLE
+        where 1=1
+        <if test="title!=null">
+          AND TITLE like concat('%',#{title},'%')
+        </if>
+        <if test="isIndex==true">
+          AND STATUS = 0
+        </if>
     </select>
 
     <!--auto generated by codehelper on 2017-07-08 13:28:10-->
@@ -145,7 +153,14 @@
             A.*,B.NAME CATEGORY_NAME
         from ARTICLE A
             INNER JOIN CATEGORY B ON A.CATEGORY_ID = B.ID
-        where A.TITLE like concat('%',#{title},'%')
+        where 1=1
+        <if test="title!=null">
+            AND A.TITLE like concat('%',#{title},'%')
+        </if>
+        <if test="isIndex==true">
+            AND A.STATUS = 0
+        </if>
+
         ORDER BY A.CREATE_TIME DESC
     </select>
 
@@ -156,21 +171,45 @@
         from ARTICLE A
             INNER JOIN CATEGORY B ON A.CATEGORY_ID = B.ID
         where A.ID=#{id}
+            AND A.STATUS = 0
     </select>
 
     <!--auto generated by codehelper on 2017-07-08 21:40:00-->
     <delete id="deleteById">
         delete from ARTICLE
-        where `ID`=#{id}
+        where ID=#{id}
     </delete>
 
-<!--auto generated by codehelper on 2017-07-12 17:37:31-->
+
+    <select id="initPageByCategoryId" resultType="int">
+        select count(id) from ARTICLE A
+        where 1=1
+            AND A.CATEGORY_ID=#{categoryId}
+            AND STATUS = 0
+    </select>
+
+    <!--auto generated by codehelper on 2017-07-12 17:37:31-->
     <select id="findByCategoryId" resultMap="AllColumnMap">
         select
-        <include refid="all_column"/>
-        from ARTICLE
-        where CATEGORY_ID=#{categoryId}
+            A.*,B.NAME CATEGORY_NAME
+        from ARTICLE A
+            INNER JOIN CATEGORY B ON A.CATEGORY_ID = B.ID
+        where 1=1
+          AND A.CATEGORY_ID=#{categoryId}
+          AND A.STATUS = 0
         ORDER BY CREATE_TIME DESC
+    </select>
+
+<!--auto generated by codehelper on 2017-07-13 23:06:02-->
+    <select id="findTop6OrderByShowCount" resultMap="AllColumnMap">
+        select
+            A.*,B.NAME CATEGORY_NAME
+        from ARTICLE A
+            INNER JOIN CATEGORY B ON A.CATEGORY_ID = B.ID
+        where 1=1
+           AND A.STATUS = 0
+        ORDER BY SHOW_COUNT DESC
+        LIMIT 0,6
     </select>
 </mapper>
 

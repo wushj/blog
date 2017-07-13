@@ -20,12 +20,13 @@ $(function(){
 
     //初始化页面
 function initPage() {
+    var categoryId = $("#categoryId").text();
     var page = $("#current-page").text();
     if (page==null || page ==0 ){
         page = 1;
     }
     $.ajax({
-        url : '/article/initPage',
+        url : '/category/initPage/' + categoryId,
         data : 'page='+page,
         success  : function(data) {
             $("#total-num").text(data.totalCount);
@@ -42,28 +43,28 @@ function initPage() {
                     onPageChange: function (num, type) {
                         // 加载分类列表
                         $("#current-page").text(num);
-                        loadIndexArticleList();
+                        loadCategoryArticleList();
                     }
                 });
             }else {
-                loadIndexArticleList();
+                loadCategoryArticleList();
             }
         }
     });
 }
 
     // 加载分类列表
-function loadIndexArticleList(){
+function loadCategoryArticleList(){
     // 收集参数
-    var keyword = $("#keyword").val();
+    var categoryId = $("#categoryId").text();
     var page = $("#current-page").text();
     if(isEmpty(page) || page == 0){
         page = 1;
     }
     // 查询列表
     $.ajax({
-        url : '/article/load',
-        data : 'page='+page+"&title="+keyword,
+        url : '/category/load/' + categoryId,
+        data : 'page='+page,
         success  : function(data) {
             $("#dataList").html(data);
         }

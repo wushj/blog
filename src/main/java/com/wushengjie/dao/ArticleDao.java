@@ -1,7 +1,6 @@
 package com.wushengjie.dao;
 
 import com.wushengjie.vo.Pager;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,14 +18,18 @@ public interface ArticleDao {
 
     List<Article> findAll();
 
-    int initPage(Pager pager, @Param("title") String title);
+    int initPage(Pager pager, @Param("title") String title,@Param("isIndex") Boolean isIndex);
 
-    List<Article> findByTitle(@Param("title")String title);
+    List<Article> findByTitle(@Param("title")String title,@Param("isIndex") Boolean isIndex);
 
     Article findById(@Param("id")Integer id);
 
     int deleteById(@Param("id")Integer id);
 
+    int initPageByCategoryId(Pager pager, @Param("categoryId") Integer categoryId);
+
     List<Article> findByCategoryId(@Param("categoryId")Integer categoryId);
+
+    List<Article> findTop6OrderByShowCount();
 
 }

@@ -5,19 +5,19 @@
     <!--头部-->
     <header th:replace="partial/header :: header"></header>
 
+    <div id="categoryId" th:text="${categoryId}" style="display: none"></div>
+
     <div class="widewrapper main">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 blog-main">
-
-                    <div id ="dataList"></div>
+                    <div id="dataList"></div>
 
                     <div class="pagination" style="display:none">共
                         <span id="total-num"></span>
                         <span id="current-page"></span>
                         <span id="total-page"></span>
                     </div>
-
                     <div class="paging pagination" style="float: right" id="pagination">
                     </div>
                 </div>
@@ -30,7 +30,10 @@
 
     <!--尾部-->
     <footer th:replace="partial/footer :: footer"></footer>
-
+    
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="glyphicon glyphicon-arrow-up"></i></a>
+	</div>
 
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
@@ -38,7 +41,7 @@
     <script src="/assets/js/jqPaginator.min.js"></script>
     <script src="/assets/js/validation.js"></script>
     <!--自定义js-->
-    <script src="/assets/js/index.js"></script>
+    <script src="/assets/js/detail.js"></script>
     <script src="/assets/js/sider.js"></script>
 
 </body>

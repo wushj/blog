@@ -51,7 +51,7 @@ public class AdminArticleController {
     @RequestMapping("/initPage")
     @ResponseBody
     public Pager initPage(Pager pager,String title){
-        articleService.initPage(pager,title);
+        articleService.initPage(pager,title,false);
         return pager;
     }
 
@@ -64,7 +64,7 @@ public class AdminArticleController {
      */
     @RequestMapping("/load")
     public String load(Pager pager , String title, Model model){
-        List<Article> articleList = articleService.loadArticle(pager,title);
+        List<Article> articleList = articleService.loadArticle(pager,title,false);
         model.addAttribute("articleList",articleList);
         return "admin/article/articleTable";
     }

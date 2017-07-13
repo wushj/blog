@@ -709,14 +709,14 @@ The blog main page boxes
   }
 }
 
-.blog-teaser .teaser-details {
+.blog-teaser header {
+  text-align: center;
+}
+
+.blog-teaser .teaser-detail {
   text-align: left;
   padding-top : 20px;
   padding-left : 50px;
-}
-
-.blog-teaser header {
-  text-align: center;
 }
 
 .blog-teaser header img {

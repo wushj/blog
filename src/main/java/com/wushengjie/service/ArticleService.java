@@ -34,7 +34,31 @@ public class ArticleService{
     }
 
     /**
-     * 更新或删除文章
+     * 根据分类加载文章分页信息
+     * @param pager
+     * @param categoryId
+     */
+    public void initPageByCategoryId(Pager pager,Integer categoryId){
+        int count = articleDao.initPageByCategoryId(pager,categoryId);
+        pager.setTotalCount(count);
+    }
+
+    /**
+     * 分页获取分类下文章
+     */
+    public List<Article> findByCategoryId(Pager pager,Integer categoryId){
+        PageHelper.offsetPage(pager.getStart(), pager.getLimit());
+        return articleDao.findByCategoryId(categoryId);
+    }
+
+    /**
+     * 获取热门文章
+     */
+    public List<Article> findTop6OrderByShowCount(){
+        return articleDao.findTop6OrderByShowCount();
+    }
+    /**
+     * 更新或新增文章
      * @param article
      */
     public void inertOrUpdate(Article article){
@@ -53,9 +77,9 @@ public class ArticleService{
      * @param title
      * @return
      */
-    public List<Article> loadArticle(Pager pager, String title){
+    public List<Article> loadArticle(Pager pager, String title,Boolean isIndex){
         PageHelper.offsetPage(pager.getStart(), pager.getLimit());
-        return articleDao.findByTitle(title);
+        return articleDao.findByTitle(title,isIndex);
     }
 
     /**
@@ -63,8 +87,8 @@ public class ArticleService{
      * @param pager
      * @param title
      */
-    public void initPage(Pager pager,String title){
-        int count = articleDao.initPage(pager,title);
+    public void initPage(Pager pager,String title,Boolean isIndex){
+        int count = articleDao.initPage(pager,title,isIndex);
         pager.setTotalCount(count);
     }
 
@@ -99,7 +123,7 @@ public class ArticleService{
             //取第一个换行前的文本作为博客预览
             String content = String.valueOf(String.valueOf(article.getContent()).split("\n")[0]);
             //转换markdown为html
-//            content = Processor.process(content);
+            content = Processor.process(content);
             article.setContent(content);
         }
         return articleList;

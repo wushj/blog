@@ -13,34 +13,55 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 /**
- * Created by wu on 2017/7/12.
+ * Created by WU on 2017/7/13.
  * 文章controller
  */
-@Controller
 @RequestMapping("/article")
+@Controller
 public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
 
-    @RequestMapping("/{categoryId}")
-    public String details(@PathVariable("categoryId") String categoryId){
-        return "details";
+    /**
+     * 文章列表
+     * @return
+     */
+    @RequestMapping("articleList")
+    public String articleList(){
+        return "articleList";
     }
 
     /**
-     * 初始化页面条数
+     * 文章详情
+     * @param articleId
+     * @param model
+     * @return
+     */
+    @RequestMapping("/{articleId}")
+    public String details(@PathVariable("articleId") Integer articleId, Model model){
+        Article article = articleService.findById(articleId);
+        //浏览量+1
+        article.setShowCount(article.getShowCount() + 1);
+        articleService.update(article);
+
+        model.addAttribute("article",article);
+        return "article";
+    }
+
+    /**
+     * 首页文章初始化页面条数
      * @return
      */
     @RequestMapping("/initPage")
     @ResponseBody
     public Pager initPage(Pager pager, String title){
-        articleService.initPage(pager,title);
+        articleService.initPage(pager,title,true);
         return pager;
     }
 
     /**
-     * 加载文章列表
+     * 首页加载文章列表
      * @param pager 分页对象
      * @param model
      * @return
@@ -51,5 +72,6 @@ public class ArticleController {
         model.addAttribute("articleList",articleList);
         return "partial/indexArticleList";
     }
+
 
 }

@@ -325,9 +325,9 @@
                             totalPages: data.totalPageNum,
                             visiblePages: 5,
                             currentPage: data.page,
-                            prev: '<li class="am-active"><a href="javascript:;">«</a></li>',
-                            next: '<li class="am-active"><a href="javascript:;">»</a></li>',
-                            page: '<li class="am-active"><a href="javascript:;">{{page}}</a></li>',
+                            prev: '<li class="prev am-active"><a href="javascript:;">«</a></li>',
+                            next: '<li class="next am-active"><a href="javascript:;">»</a></li>',
+                            page: '<li class="page am-active"><a href="javascript:;">{{page}}</a></li>',
                             onPageChange: function (num, type) {
                                 // 加载友情链接列表
                                 $("#current-page").text(num);

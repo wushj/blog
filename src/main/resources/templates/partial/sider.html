@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<aside class="col-md-4 blog-aside">
+    <div class="aside-widget">
+        <header>
+            <h3>热门文章</h3>
+        </header>
+        <div class="body">
+            <ul class="clean-list" th:each="article,stat : ${hotArticles}">
+                <li><a th:href="'/article/'+ ${article.id}" th:text="${article.title}"></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="aside-widget">
+        <header>
+            <h3>文章分类</h3>
+        </header>
+        <div class="body">
+            <ul class="clean-list" th:each="category,stat : ${categories}">
+                <li><a th:href="'/category/'+ ${category.id}" th:text="${category.name}"></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="aside-widget">
+        <header>
+            <h3>标签</h3>
+        </header>
+        <div class="body clearfix">
+            <ul class="tags"  th:each="tag,stat : ${tags}">
+                <li><a th:href="'/tag/'+ ${tag.id}" th:text="${tag.name}"></a></li>
+            </ul>
+        </div>
+    </div>
+</aside>
