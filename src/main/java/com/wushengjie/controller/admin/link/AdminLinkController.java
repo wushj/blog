@@ -66,16 +66,7 @@ public class AdminLinkController {
     @RequestMapping("/inertOrUpdate")
     @ResponseBody
     public ResultInfo inertOrUpdate(Link link){
-        if(0 == link.getId()){
-            link.setCreateTime(new Date());
-            linkService.insertSelective(link);
-        }else{
-            Link oldLink = linkService.findById(link.getId());
-            if (oldLink != null) {
-                oldLink.setName(link.getName());
-                linkService.update(oldLink);
-            }
-        }
+        linkService.inertOrUpdate(link);
         return ResultInfoFactory.getSuccessResultInfo("保存成功！！！");
     }
 

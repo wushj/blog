@@ -1,13 +1,14 @@
 package com.wushengjie.service;
 
 import com.github.pagehelper.PageHelper;
+import com.wushengjie.dao.TagDao;
 import com.wushengjie.vo.Pager;
 import com.wushengjie.vo.Tag;
 import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
-import java.util.List;
 
-import com.wushengjie.dao.TagDao;
+import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class TagService{
@@ -29,6 +30,24 @@ public class TagService{
 
     public int update(Tag pojo){
         return tagDao.update(pojo);
+    }
+
+
+    /**
+     * 更新或修改
+     * @param tag
+     */
+    public void inertOrUpdate(Tag tag){
+        if(0 == tag.getId()){
+            tag.setCreateTime(new Date());
+            tagDao.insertSelective(tag);
+        }else{
+            Tag oldTag = tagDao.findById(tag.getId());
+            if (oldTag != null) {
+                oldTag.setName(tag.getName());
+                tagDao.update(oldTag);
+            }
+        }
     }
 
     /**

@@ -33,6 +33,7 @@ h2 {
 h3 {
   font-size: 21px;
   line-height: 30px;
+  text-align: center;
   font-weight: normal;
   font-family: 'Open Sans', sans-serif;
 }
@@ -726,7 +727,7 @@ The blog main page boxes
 
 .blog-teaser header h3 {
   color: #454a4e;
-  margin-top: 0;
+  margin-top: 15px;
   font-size: 28px;
   margin-bottom: 10px;
 }
@@ -1248,8 +1249,9 @@ Form styles
 Buttons used in clean 
 =============== */
 .btn-clean-one {
-  color: #444;
+  color: #5a6065;
   border: 1px solid #ddd;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .btn-clean-one:hover,
@@ -1257,8 +1259,8 @@ Buttons used in clean
 .btn-clean-one:active,
 .btn-clean-one.active,
 .open .dropdown-toggle.btn-clean-one {
-  color: #000;
-  border-color: #222;
+  color: #454a4e;
+  border-color: #454a4e;
   background-color: #fff;
 }
 

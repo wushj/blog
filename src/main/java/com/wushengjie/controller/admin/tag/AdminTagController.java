@@ -66,16 +66,7 @@ public class AdminTagController {
     @RequestMapping("/inertOrUpdate")
     @ResponseBody
     public ResultInfo inertOrUpdate(Tag tag){
-        if(0 == tag.getId()){
-            tag.setCreateTime(new Date());
-            tagService.insertSelective(tag);
-        }else{
-            Tag oldTag = tagService.findById(tag.getId());
-            if (oldTag != null) {
-                oldTag.setName(tag.getName());
-                tagService.update(oldTag);
-            }
-        }
+        tagService.inertOrUpdate(tag);
         return ResultInfoFactory.getSuccessResultInfo("保存成功！！！");
     }
 

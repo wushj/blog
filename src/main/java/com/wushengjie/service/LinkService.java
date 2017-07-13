@@ -1,13 +1,15 @@
 package com.wushengjie.service;
 
 import com.github.pagehelper.PageHelper;
+import com.wushengjie.dao.LinkDao;
+import com.wushengjie.util.ResultInfo;
 import com.wushengjie.vo.Link;
 import com.wushengjie.vo.Pager;
 import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
-import java.util.List;
 
-import com.wushengjie.dao.LinkDao;
+import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class LinkService{
@@ -29,6 +31,25 @@ public class LinkService{
 
     public int update(Link pojo){
         return linkDao.update(pojo);
+    }
+
+
+    /**
+     * 更新或修改
+     * @param link
+     * @return
+     */
+    public void inertOrUpdate(Link link) {
+        if (0 == link.getId()) {
+            link.setCreateTime(new Date());
+            linkDao.insertSelective(link);
+        } else {
+            Link oldLink = linkDao.findById(link.getId());
+            if (oldLink != null) {
+                oldLink.setName(link.getName());
+                linkDao.update(oldLink);
+            }
+        }
     }
 
     /**

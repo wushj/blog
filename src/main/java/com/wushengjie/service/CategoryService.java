@@ -5,6 +5,7 @@ import com.wushengjie.vo.Category;
 import com.wushengjie.vo.Pager;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 import com.wushengjie.dao.CategoryDao;
@@ -30,6 +31,26 @@ public class CategoryService{
     public int update(Category pojo){
         return categoryDao.update(pojo);
     }
+
+
+    /**
+     * 更新或新增分类
+     * @return
+     */
+    public void inertOrUpdate(Category category) {
+        if (0 == category.getId()) {
+            category.setCreateTime(new Date());
+            categoryDao.insertSelective(category);
+        } else {
+            Category oldCategory = categoryDao.findById(category.getId());
+            if (oldCategory != null) {
+                oldCategory.setName(category.getName());
+                oldCategory.setSort(category.getSort());
+                categoryDao.update(oldCategory);
+            }
+        }
+    }
+
 
     /**
      * 根据名称初始化文章分页

@@ -76,7 +76,7 @@ public class AdminArticleController {
     @RequestMapping("/inertOrUpdate")
     @ResponseBody
     public ResultInfo inertOrUpdate(Article article){
-
+        articleService.inertOrUpdate(article);
         return ResultInfoFactory.getSuccessResultInfo("保存成功！！！");
     }
 

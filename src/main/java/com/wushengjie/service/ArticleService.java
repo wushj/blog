@@ -1,14 +1,15 @@
 package com.wushengjie.service;
 
 import com.github.pagehelper.PageHelper;
+import com.github.rjeschke.txtmark.Processor;
+import com.wushengjie.dao.ArticleDao;
 import com.wushengjie.vo.Article;
 import com.wushengjie.vo.Pager;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
-
-import com.wushengjie.dao.ArticleDao;
 
 @Service
 public class ArticleService{
@@ -85,4 +86,22 @@ public class ArticleService{
         return articleDao.deleteById(id);
     }
 
+
+    /**
+     * 首页加载文章列表
+     * @param pager
+     * @return
+     */
+    public List<Article> loadIndexArticle(Pager pager){
+        PageHelper.offsetPage(pager.getStart(), pager.getLimit());
+        List<Article> articleList = articleDao.findAll();
+        for (Article article : articleList) {
+            //取第一个换行前的文本作为博客预览
+            String content = String.valueOf(String.valueOf(article.getContent()).split("\n")[0]);
+            //转换markdown为html
+//            content = Processor.process(content);
+            article.setContent(content);
+        }
+        return articleList;
+    }
 }

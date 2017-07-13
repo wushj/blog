@@ -66,17 +66,7 @@ public class AdminCategoryController {
     @RequestMapping("/inertOrUpdate")
     @ResponseBody
     public ResultInfo inertOrUpdate(Category category){
-        if(0 == category.getId()){
-            category.setCreateTime(new Date());
-            categoryService.insertSelective(category);
-        }else{
-            Category oldCategory = categoryService.findById(category.getId());
-            if (oldCategory != null) {
-                oldCategory.setName(category.getName());
-                oldCategory.setSort(category.getSort());
-                categoryService.update(oldCategory);
-            }
-        }
+        categoryService.inertOrUpdate(category);
         return ResultInfoFactory.getSuccessResultInfo("保存成功！！！");
     }
 

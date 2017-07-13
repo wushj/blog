@@ -130,6 +130,14 @@
             <version>2.8.0</version>
         </dependency>
 
+        <!-- markDown转html -->
+        <dependency>
+            <groupId>com.github.rjeschke</groupId>
+            <artifactId>txtmark</artifactId>
+            <version>0.13</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
