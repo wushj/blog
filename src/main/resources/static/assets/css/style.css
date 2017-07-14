@@ -712,6 +712,14 @@ The blog main page boxes
   text-align: center;
 }
 
+.blog-teaser .teaser-details {
+  text-align: left;
+}
+
+.blog-teaser header i{
+  color: #696f74;
+}
+
 .blog-teaser .teaser-detail {
   text-align: left;
   padding-top : 20px;
