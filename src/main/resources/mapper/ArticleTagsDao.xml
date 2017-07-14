@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wushengjie.dao.ArticleTagsDao">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="com.wushengjie.vo.ArticleTags">
+        <result column="ARTICLE_ID" property="articleId"/>
+        <result column="TAG_ID" property="tagId"/>
+        <result column="ID" property="id"/>
+        <result column="CREATE_TIME" property="createTime"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        `ARTICLE_ID`,
+        `TAG_ID`,
+        `ID`,
+        `CREATE_TIME`
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO article_tags (
+            `ARTICLE_ID`,
+            `TAG_ID`,
+            `ID`,
+            `CREATE_TIME`
+        ) VALUES (
+            #{pojo.articleId},
+            #{pojo.tagId},
+            #{pojo.id},
+            #{pojo.createTime}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO article_tags
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.articleId!=null"> `ARTICLE_ID`,</if>
+            <if test="pojo.tagId!=null"> `TAG_ID`,</if>
+            <if test="pojo.id!=null"> `ID`,</if>
+            <if test="pojo.createTime!=null"> `CREATE_TIME`,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.articleId!=null">#{pojo.articleId},</if>
+            <if test="pojo.tagId!=null">#{pojo.tagId},</if>
+            <if test="pojo.id!=null">#{pojo.id},</if>
+            <if test="pojo.createTime!=null">#{pojo.createTime},</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO article_tags (
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.articleId},
+            #{pojo.tagId},
+            #{pojo.id},
+            #{pojo.createTime}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE article_tags
+        <set>
+            <if test="pojo.articleId != null"> `ARTICLE_ID` = #{pojo.articleId}, </if>
+            <if test="pojo.tagId != null"> `TAG_ID` = #{pojo.tagId}, </if>
+            <if test="pojo.id != null"> `ID` = #{pojo.id}, </if>
+            <if test="pojo.createTime != null"> `CREATE_TIME` = #{pojo.createTime} </if>
+        </set>
+        WHERE ID = #{pojo.id}
+    </update>
+</mapper>
+

@@ -38,6 +38,24 @@ public class ArticleService{
      * @param pager
      * @param categoryId
      */
+    public void initPageByTagId(Pager pager,Integer categoryId){
+        int count = articleDao.initPageByTagId(pager,categoryId);
+        pager.setTotalCount(count);
+    }
+
+    /**
+     * 分页获取分类下文章
+     */
+    public List<Article> findByTagId(Pager pager,Integer categoryId){
+        PageHelper.offsetPage(pager.getStart(), pager.getLimit());
+        return articleDao.findByTagId(categoryId);
+    }
+
+    /**
+     * 根据分类加载文章分页信息
+     * @param pager
+     * @param categoryId
+     */
     public void initPageByCategoryId(Pager pager,Integer categoryId){
         int count = articleDao.initPageByCategoryId(pager,categoryId);
         pager.setTotalCount(count);

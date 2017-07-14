@@ -30,6 +30,11 @@ public interface ArticleDao {
 
     List<Article> findByCategoryId(@Param("categoryId")Integer categoryId);
 
+    int initPageByTagId(Pager pager,@Param("tagId")Integer tagId);
+
+    List<Article> findByTagId(@Param("tagId")Integer tagId);
+
     List<Article> findTop6OrderByShowCount();
+
 
 }

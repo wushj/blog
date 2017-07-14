@@ -72,6 +72,14 @@ public class TagService{
     }
 
     /**
+     * 获取文章最多的15个标签
+     * @return
+     */
+    public List<Tag> findTop15GroupByArticle(){
+        return tagDao.findTop15GroupByArticle();
+    }
+
+    /**
      * 获取所有标签
      * @return
      */

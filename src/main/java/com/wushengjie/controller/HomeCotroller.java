@@ -56,14 +56,26 @@ public class HomeCotroller {
     }
 
     /**
-     * 文章列表
+     * 根据分类加载文章列表
      * @param categoryId
      * @param model
      * @return
      */
     @RequestMapping("category/{categoryId}")
-    public String details(Pager pager,@PathVariable("categoryId") Integer categoryId,Model model){
+    public String detailsCategory(Pager pager,@PathVariable("categoryId") Integer categoryId,Model model){
         model.addAttribute("categoryId",categoryId);
+        return "detail";
+    }
+
+    /**
+     * 根据标签加载文章列表
+     * @param tagId
+     * @param model
+     * @return
+     */
+    @RequestMapping("tag/{tagId}")
+    public String detailsTag(Pager pager,@PathVariable("tagId") Integer tagId,Model model){
+        model.addAttribute("tagId",tagId);
         return "detail";
     }
 }

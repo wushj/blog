@@ -21,12 +21,20 @@ $(function(){
     //初始化页面
 function initPage() {
     var categoryId = $("#categoryId").text();
+    var tagId = $("#tagId").text();
+    var url = null;
+    if(categoryId != null && categoryId != undefined && categoryId != "") {
+        url = '/category/initPage/' + categoryId;
+    }else if(tagId != null && tagId != undefined && tagId != ""){
+        url = '/tag/initPage/' + tagId;
+    }
+
     var page = $("#current-page").text();
     if (page==null || page ==0 ){
         page = 1;
     }
     $.ajax({
-        url : '/category/initPage/' + categoryId,
+        url : url,
         data : 'page='+page,
         success  : function(data) {
             $("#total-num").text(data.totalCount);
@@ -57,13 +65,23 @@ function initPage() {
 function loadCategoryArticleList(){
     // 收集参数
     var categoryId = $("#categoryId").text();
+    var tagId = $("#tagId").text();
+    var url = null;
+    //根据分类 或者 标签 加载文章列表
+    if(categoryId != null && categoryId != undefined && categoryId != "") {
+        url = '/category/load/' + categoryId;
+    }else if(tagId != null && tagId != undefined && tagId != ""){
+        url = '/tag/load/' + tagId;
+    }
+
     var page = $("#current-page").text();
     if(isEmpty(page) || page == 0){
         page = 1;
     }
+
     // 查询列表
     $.ajax({
-        url : '/category/load/' + categoryId,
+        url : url,
         data : 'page='+page,
         success  : function(data) {
             $("#dataList").html(data);

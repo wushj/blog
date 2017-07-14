@@ -44,8 +44,8 @@ public class SiderController {
         //加载分类
         List<Category> categories = categoryService.findAll();
         model.addAttribute("categories",categories);
-        //加载标签
-        List<Tag> tags = tagService.findAll();
+        //加载文章最多的15个标签
+        List<Tag> tags = tagService.findTop15GroupByArticle();
         model.addAttribute("tags",tags);
 
         return "partial/sider";

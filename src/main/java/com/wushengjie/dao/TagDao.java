@@ -17,6 +17,8 @@ public interface TagDao {
 
     int update(@Param("pojo") Tag pojo);
 
+    List<Tag> findTop15GroupByArticle();
+
     List<Tag> findAll();
 
     int initPage(Pager pager, @Param("name") String name);

@@ -5,7 +5,7 @@ CREATE TABLE `ARTICLE` (
     `TITLE` varchar(50) NOT NULL DEFAULT '' COMMENT 'title',
     `CONTENT` longtext COMMENT 'content',
     `DESCRIPTION` varchar(50) DEFAULT '' COMMENT 'description',
-    `STATUS` int(11) NOT NULL DEFAULT '1' COMMENT 'status',
+    `STATUS` int(11) NOT NULL DEFAULT '0' COMMENT 'status',
     `AUTHOR` varchar(50) DEFAULT '' COMMENT 'author',
     `UPDATE_TIME` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'updateTime',
     `SHOW_COUNT` int(11) NOT NULL DEFAULT '0' COMMENT 'showCount',

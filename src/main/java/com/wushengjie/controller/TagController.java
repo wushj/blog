@@ -19,32 +19,29 @@ import java.util.List;
 @RequestMapping("/tag")
 @Controller
 public class TagController {
-//
-//    @Autowired
-//    private ArticleService articleService;
-//
-//    /**
-//     * 根据分类加载初始化页面条数
-//     * @return
-//     */
-//    @RequestMapping("/initPage/{tagId}")
-//    @ResponseBody
-//    public Pager initPage(Pager pager,@PathVariable("tagId") Integer tagId){
-//        articleService.initPageBytagId(pager,tagId);
-//        return pager;
-//    }
-//
-//    /**
-//     * 根据分类加载文章列表
-//     * @param tagId
-//     * @param model
-//     * @return
-//     */
-//    @RequestMapping("/{tagId}")
-//    public String details(Pager pager,@PathVariable("tagId") Integer tagId,Model model){
-//        List<Article> articleList = articleService.findBytagId(pager, tagId);
-//        model.addAttribute("articleList",articleList);
-//        return "articleList";
-//    }
 
+    @Autowired
+    private ArticleService articleService;
+
+    /**
+     * 根据标签加载初始化页面条数
+     * @return
+     */
+    @RequestMapping("/initPage/{tagId}")
+    @ResponseBody
+    public Pager initPage(Pager pager,@PathVariable("tagId") Integer tagId){
+        articleService.initPageByTagId(pager,tagId);
+        return pager;
+    }
+
+    /**
+     * 根据标签加载页面
+     * @return
+     */
+    @RequestMapping("/load/{tagId}")
+    public String load(Pager pager,@PathVariable("tagId") Integer tagId, Model model){
+        List<Article> articleList = articleService.findByTagId(pager, tagId);
+        model.addAttribute("articleList",articleList);
+        return "partial/detailArticleList";
+    }
 }
