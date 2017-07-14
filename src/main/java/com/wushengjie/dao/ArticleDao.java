@@ -1,5 +1,7 @@
 package com.wushengjie.dao;
+import java.util.Date;
 
+import com.wushengjie.vo.ArticleArchive;
 import com.wushengjie.vo.Pager;
 import org.apache.ibatis.annotations.Param;
 
@@ -35,6 +37,10 @@ public interface ArticleDao {
     List<Article> findByTagId(@Param("tagId")Integer tagId);
 
     List<Article> findTop6OrderByShowCount();
+
+    List<ArticleArchive> getArchiveMonth();
+
+    List<Article> findByMonth(@Param("month")String month);
 
 
 }

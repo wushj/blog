@@ -2,6 +2,7 @@ package com.wushengjie.controller;
 
 import com.wushengjie.service.ArticleService;
 import com.wushengjie.vo.Article;
+import com.wushengjie.vo.ArticleArchive;
 import com.wushengjie.vo.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,9 @@ import java.util.List;
  */
 @Controller
 public class HomeCotroller {
+
+    @Autowired
+    private ArticleService articleService;
 
     /**
      * 首页
@@ -51,7 +55,9 @@ public class HomeCotroller {
      * @return
      */
     @RequestMapping("archive")
-    public String archive(){
+    public String archive(Integer index,Model model){
+        List<ArticleArchive> archiveList = articleService.getArchive(index);
+        model.addAttribute("archiveList",archiveList);
         return "archive";
     }
 
@@ -62,7 +68,7 @@ public class HomeCotroller {
      * @return
      */
     @RequestMapping("category/{categoryId}")
-    public String detailsCategory(Pager pager,@PathVariable("categoryId") Integer categoryId,Model model){
+    public String detailsCategory(@PathVariable("categoryId") Integer categoryId,Model model){
         model.addAttribute("categoryId",categoryId);
         return "detail";
     }
@@ -74,8 +80,9 @@ public class HomeCotroller {
      * @return
      */
     @RequestMapping("tag/{tagId}")
-    public String detailsTag(Pager pager,@PathVariable("tagId") Integer tagId,Model model){
+    public String detailsTag(@PathVariable("tagId") Integer tagId,Model model){
         model.addAttribute("tagId",tagId);
         return "detail";
     }
+
 }

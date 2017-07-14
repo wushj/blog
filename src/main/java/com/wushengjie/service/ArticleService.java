@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.rjeschke.txtmark.Processor;
 import com.wushengjie.dao.ArticleDao;
 import com.wushengjie.vo.Article;
+import com.wushengjie.vo.ArticleArchive;
 import com.wushengjie.vo.Pager;
 import org.springframework.stereotype.Service;
 
@@ -145,5 +146,24 @@ public class ArticleService{
             article.setContent(content);
         }
         return articleList;
+    }
+
+    /**
+     * 获取文章归档
+     * @param index
+     * @return
+     */
+    public List<ArticleArchive> getArchive(Integer index) {
+        if(index == null){
+            index = 0;
+        }
+        //每次初始2个月
+        PageHelper.startPage(index,2);
+        List<ArticleArchive> articleArchiveList = articleDao.getArchiveMonth();
+
+        for (ArticleArchive archive : articleArchiveList) {
+            archive.setArticleList(articleDao.findByMonth(archive.getMonth()));
+        }
+        return articleArchiveList;
     }
 }
