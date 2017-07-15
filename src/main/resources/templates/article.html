@@ -27,15 +27,52 @@
                         </div>
                     </article>
 
-                    <aside class="social-icons clearfix">
+                    <!--<aside class="social-icons clearfix">
                         <h3>Share on </h3> 
                         <a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i class="fa fa-twitter"></i></a> <a href="#"><i class="fa fa-google"></i></a>
-                    </aside>
+                    </aside>-->
 
                     <aside class="comments" id="comments">
                         <hr>
+                        <!--PC和WAP自适应版-->
+                        <div id="SOHUCS" sid="请将此处替换为配置SourceID的语句" ></div>
+                        <script type="text/javascript">
+                            (function(){
+                                var appid = 'cyt793Fox';
+                                var conf = 'prod_d001b86e57c1633ce09b0ab2999f0b61';
+                                var width = window.innerWidth || document.documentElement.clientWidth;
+                                if (width < 960) {
+                                    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+                                } else {
+                                    var loadJs = function (d, a) {
+                                        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                                        var b = document.createElement("script");
+                                        b.setAttribute("type", "text/javascript");
+                                        b.setAttribute("charset", "UTF-8");
+                                        b.setAttribute("src", d);
+                                        if (typeof a === "function") {
+                                            if (window.attachEvent) {
+                                                b.onreadystatechange = function () {
+                                                    var e = b.readyState;
+                                                    if (e === "loaded" || e === "complete") {
+                                                        b.onreadystatechange = null;
+                                                        a()
+                                                    }
+                                                }
+                                            } else {
+                                                b.onload = a
+                                            }
+                                        }
+                                        c.appendChild(b)
+                                    };
+                                    loadJs("http://changyan.sohu.com/upload/changyan.js", function () {
+                                        window.changyan.api.config({appid: appid, conf: conf})
+                                    });
+                                }
+                            })();
+                         </script>
 
-                        <h2><i class="fa fa-comments"></i> 6 Comments</h2>
+                        <!--<h2><i class="fa fa-comments"></i> 6 Comments</h2>
 
                         <article class="comment">
                             <header class="clearfix">
@@ -115,7 +152,7 @@
                              <div class="body">
                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere sit perspiciatis debitis, vel ducimus praesentium expedita, assumenda ipsum cum corrupti dolorum modi. Rem ipsam similique sapiente obcaecati tenetur beatae voluptatibus.
                             </div>
-                        </article>        
+                        </article>  -->
                     </aside>
 
                     <aside class="create-comment" id="create-comment">
