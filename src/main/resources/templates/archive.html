@@ -15,27 +15,33 @@
 						<div class="col-md-12">
 						  <div class="VivaTimeline">
 							<dl>
-							  <dt>2016 3月</dt>
-								  <dd class="pos-left clearfix">
-								  <div class="circ"></div>
-									  <div class="time">Feb 03</div>
-									  <div class="events">
-											<div class="events-header">Event Heading</div>
-									  </div>
-								  </dd>
-							  <!-- 其它时间节点 -->
-							  <dt>Jan 2016</dt>
-								<dd class="pos-right clearfix">
-								  <div class="circ"></div>
-									  <div class="time">Feb 03</div>
-									  <div class="events">
-											<div class="events-header">Event Heading</div>
-									  </div>
-								  </dd>
-							  <dt>Dec 2015</dt>
-							  <dt>Oct 2015</dt>
-							  <dt>Sep 2015</dt>
-							  <dt>Aug 2015</dt>
+                                <div th:each="archive,stat :${archiveList}">
+							        <dt th:text="${archive.month}"></dt>
+                                    <div th:each="article,stat2 :${archive.articleList}">
+                                        <dd th:if="${stat2.index % 2 == 0}" class="pos-left clearfix">
+                                            <div class="circ"></div>
+                                            <div class="time" th:text="${#dates.format(article.createTime,'MM-dd')}"></div>
+                                            <div class="events">
+                                                <div class="events-header" th:text="${article.title}"></div>
+                                                <div class="events-body">
+                                                    <div class="row" th:text="${article.description}" style="text-align: center">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                        <dd th:if="${stat2.index % 2 != 0}" class="pos-right clearfix">
+                                            <div class="circ"></div>
+                                            <div class="time" th:text="${#dates.format(article.createTime,'MM-dd')}"></div>
+                                            <div class="events">
+                                                <div class="events-header" th:text="${article.title}"></div>
+                                                <div class="events-body">
+                                                    <div class="row" th:text="${article.description}" style="text-align: center">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </div>
+                                </div>
 							</dl>
 						  </div>
 						</div>
@@ -56,5 +62,6 @@
 	<script src="/assets/js/jquery.eeyellow.Timeline.js"></script>
 	<!--自定义js-->
 	<script src="/assets/js/archive.js"></script>
+	<script src="/assets/js/footer.js"></script>
 </body>
 </html>

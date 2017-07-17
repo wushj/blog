@@ -33,7 +33,6 @@ h2 {
 h3 {
   font-size: 21px;
   line-height: 30px;
-  text-align: center;
   font-weight: normal;
   font-family: 'Open Sans', sans-serif;
 }
@@ -531,7 +530,6 @@ Footer widgets
   margin-top: 25px;
   margin-bottom: 50px;
   line-height: 23px;
-  text-align: center;
 }
 
 .footer-widget h3 {
@@ -712,6 +710,14 @@ The blog main page boxes
 
 .blog-teaser header {
   text-align: center;
+}
+
+.blog-teaser .teaser-details {
+  text-align: left;
+}
+
+.blog-teaser header i{
+  color: #696f74;
 }
 
 .blog-teaser .teaser-detail {
