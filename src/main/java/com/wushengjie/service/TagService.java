@@ -32,6 +32,22 @@ public class TagService{
         return tagDao.update(pojo);
     }
 
+    /**
+     * 根据标签名获取标签列表(搜索标签用)
+     * @param name
+     * @return
+     */
+    public List<Tag> queryTagsByName(String name) {
+        return tagDao.findByName(name);
+    }
+
+    /**
+     * 根据文章ID返回标签列表
+     * @return
+     */
+    public List<Tag> getTagsByArticleId(Integer articleId){
+        return tagDao.getTagsByArticleId(articleId);
+    }
 
     /**
      * 更新或修改
@@ -104,4 +120,5 @@ public class TagService{
     public int deleteById(Integer id){
         return tagDao.deleteById(id);
     }
+
 }

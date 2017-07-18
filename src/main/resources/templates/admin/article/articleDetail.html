@@ -1,5 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="zh">
+
+
+    <!--新增tag  -->
+    <div id="winNewTag" style="overflow: hidden;">
+        <form id="new_cate_form" method="post" style="margin: 10px; margin-bottom: 0px;">
+            <table cellpadding="5" style="width: 400px;">
+                <tr>
+                    <td>标签名称：</td>
+                    <td id="name"></td>
+                </tr>
+            </table>
+        </form>
+        <div style="text-align: right; padding: 5px; margin-right: 7px;">
+            <a href="javascript:void(0)" class="button" id="saveTag">&nbsp;&nbsp;<b>保存</b>&nbsp;&nbsp;
+            </a>
+        </div>
+    </div>
+
     <div class="dialogTop">
         <a href="javascript:tipClose();" class="claseDialogBtn">关闭</a>
     </div>
@@ -22,6 +40,42 @@
                     <option value="1" th:selected="${article.status == 1}" th:text="禁用"></option>
                 </select>
             </label></li>
+            <li><label>标签：
+                <input id="tags" name="inputTagator" th:value="${tags}" class="inputTagator"
+                   style="height: 60px; width: 400px;">
+                </input>
+                <script th:inline="javascript">
+                //获取当前产品标签
+                //<![CDATA[
+                $(function() {
+                    var obj = [[${tags}]];
+                    $('#tags').tagator({
+                        autocomplete: obj
+                    });
+                    $('#winNewTag').window({
+                        width:350,
+                        height:150,
+                        modal:true,
+                        title:"新增标签",
+                        minimizable:false,
+                        maximizable:false,
+                        collapsible:false,
+                        closed:true
+                    });
+
+                    $('#categoryId').combotree({
+                        onBeforeSelect: function(node) {
+                            var isLeaf = $(this).tree('isLeaf', node.target);
+                            if (!isLeaf) {// 判断是否是叶子节点
+                                return false;// 返回false表示取消本次选择操作
+                            }
+                        }
+                    });
+                });
+                //]]>
+                </script>
+            </label></li>
+
             <li>
                 <label>描述：<input type="text" id="description" name="description" th:value="${article.description}" required value="true" class="ipt" /></label>
             </li>

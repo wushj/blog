@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
@@ -25,6 +26,21 @@ public class AdminTagController {
 
     @Autowired
     private TagService tagService;
+
+    /**
+     * 根据关键字获取标签
+     * @param name
+     * @return
+     */
+    @RequestMapping(value = "/tag/getTagByName/{name}", method = RequestMethod.GET)
+    public @ResponseBody List<Tag> getTagByName(@PathVariable(value = "name") String name) {
+        if (name != null && !"".equals(name)) {
+            return tagService.queryTagsByName(name);
+        }else{
+            return null;
+        }
+    }
+
     /**
      * 跳转到文章列表页面
      * @return
