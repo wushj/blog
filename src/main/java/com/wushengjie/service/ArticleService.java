@@ -35,7 +35,7 @@ public class ArticleService{
     }
 
     /**
-     * 根据分类加载文章分页信息
+     * 根据标签加载文章分页信息
      * @param pager
      * @param categoryId
      */
@@ -45,7 +45,7 @@ public class ArticleService{
     }
 
     /**
-     * 分页获取分类下文章
+     * 分页获取标签下文章
      */
     public List<Article> findByTagId(Pager pager,Integer categoryId){
         PageHelper.offsetPage(pager.getStart(), pager.getLimit());
@@ -165,5 +165,23 @@ public class ArticleService{
             archive.setArticleList(articleDao.findByMonth(archive.getMonth()));
         }
         return articleArchiveList;
+    }
+
+    /**
+     * 根据标签加载文章分页信息
+     * @param pager
+     * @param key
+     */
+    public void initPageByKey(Pager pager,String key){
+        int count = articleDao.initPageByKey(pager,key);
+        pager.setTotalCount(count);
+    }
+
+    /**
+     * 分页获取标签下文章
+     */
+    public List<Article> searchByKey(Pager pager,String key){
+        PageHelper.offsetPage(pager.getStart(), pager.getLimit());
+        return articleDao.findByKey(key);
     }
 }

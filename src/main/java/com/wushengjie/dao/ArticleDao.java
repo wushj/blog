@@ -36,6 +36,10 @@ public interface ArticleDao {
 
     List<Article> findByTagId(@Param("tagId")Integer tagId);
 
+    int initPageByKey(Pager pager,@Param("key")String key);
+
+    List<Article> findByKey(@Param("key")String key);
+
     List<Article> findTop6OrderByShowCount();
 
     List<ArticleArchive> getArchiveMonth();

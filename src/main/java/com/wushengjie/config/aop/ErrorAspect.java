@@ -10,10 +10,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
@@ -25,8 +29,11 @@ public class ErrorAspect {
     @Autowired
     private PropertyUtil propertyUtil;
 
+    @Autowired
+    private JavaMailSender mailSender;
+
     private Logger logger = LoggerFactory.getLogger(ErrorAspect.class);
-    @Pointcut("execution(* com.wushengjie.service.*.*(..)) || execution(* com.wushengjie.controller.*.*(..))")
+    @Pointcut("execution(* com.wushengjie.controller.*.*(..))")
     public void exceptionLog(){}
 
     /**
@@ -48,7 +55,7 @@ public class ErrorAspect {
         String args = Arrays.toString(joinPoint.getArgs());
         String classMethod = String.valueOf(joinPoint.getSignature().getDeclaringTypeName()+"."+joinPoint.getSignature().getName());
         String time = DateUtil.getDateTime(new Date());
-        String errorMessege = String.valueOf(e.getMessage());
+        String errorMessege = String.valueOf(e.getLocalizedMessage());
 
         String title = "Error Log";
         String html = biuldHtml(ip, method, requestURL, args, classMethod, time, errorMessege);
@@ -62,12 +69,20 @@ public class ErrorAspect {
      * @param title
      * @param html
      */
-    private void sendMail(String title, String html) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(propertyUtil.getMailFrom());
-        message.setTo(propertyUtil.getMailTo());
-        message.setSubject(title);
-        message.setText(html);
+    private void sendMail(String title, String html){
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setFrom(propertyUtil.getMailFrom());
+            helper.setTo(propertyUtil.getMailTo());
+            helper.setSubject(title);
+            helper.setText(html,true);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            logger.error("发送邮件失败！：" + e.getMessage());
+            e.printStackTrace();
+        }
+
     }
 
 

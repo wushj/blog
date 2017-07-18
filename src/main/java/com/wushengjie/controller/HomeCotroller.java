@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -82,6 +83,18 @@ public class HomeCotroller {
     @RequestMapping("tag/{tagId}")
     public String detailsTag(@PathVariable("tagId") Integer tagId,Model model){
         model.addAttribute("tagId",tagId);
+        return "detail";
+    }
+
+    /**
+     * 根据搜索值加载文章列表
+     * @param searchKey
+     * @param model
+     * @return
+     */
+    @RequestMapping("search")
+    public String detailsTag(@RequestParam("searchKey") String searchKey, Model model){
+        model.addAttribute("searchKey",searchKey);
         return "detail";
     }
 
