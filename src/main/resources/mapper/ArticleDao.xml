@@ -137,7 +137,7 @@
         from ARTICLE A
             INNER JOIN CATEGORY B ON A.CATEGORY_ID = B.ID
         WHERE A.STATUS = 0
-        ORDER BY A.CREATE_TIME
+        ORDER BY A.CREATE_TIME DESC git
     </select>
 
     <select id="initPage" resultType="int">
