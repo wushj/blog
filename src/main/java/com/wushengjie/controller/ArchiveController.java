@@ -30,7 +30,7 @@ public class ArchiveController {
     public String getArchive(@PathVariable Integer index, Model model) {
         List<ArticleArchive> archiveList = articleService.getArchive(index);
         model.addAttribute("archiveList", archiveList);
-        return "/partial/archiveRow";
+        return "partial/archiveRow";
     }
 
 }
