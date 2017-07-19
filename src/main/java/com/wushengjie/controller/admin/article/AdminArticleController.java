@@ -13,9 +13,7 @@ import com.wushengjie.vo.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -74,9 +72,9 @@ public class AdminArticleController {
      * 更新或新增文章
      * @return
      */
-    @RequestMapping("/inertOrUpdate")
+    @RequestMapping(value = "/inertOrUpdate" , method = RequestMethod.POST)
     @ResponseBody
-    public ResultInfo inertOrUpdate(Article article){
+    public ResultInfo inertOrUpdate(@RequestBody Article article){
         articleService.inertOrUpdate(article);
         return ResultInfoFactory.getSuccessResultInfo("保存成功！！！");
     }

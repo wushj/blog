@@ -52,7 +52,7 @@
 			if (element.id !== undefined) {
 				$(box_element).attr('id', plugin.settings.prefix + element.id);
 			}
-			$(box_element).addClass('tagator options-hidden');
+			$(box_element).addClass($(element).attr('class') +' '+ 'tagator options-hidden');
 			$(box_element).css({
 				width: $(element).css('width'),
 				padding: $(element).css('padding'),
@@ -80,7 +80,7 @@
 			// input element
 			input_element = document.createElement('input');
 			$(input_element).addClass(plugin.settings.prefix + 'input');
-			$(input_element).width(20);
+			$(input_element).width(120);
 			$(input_element).attr('autocomplete', 'false');
 			$(box_element).append(input_element);
 			// options element
@@ -215,7 +215,7 @@
                 if(searchKey.trim() !== null && searchKey.trim() !== undefined && searchKey.trim() !== ''){
 					$.ajax({
 						type: 'GET',
-						url: '/tag/getTagByName/'+searchKey,
+						url: '/admin/tag/getTagByName',
 						data : 'name='+searchKey,
 						contentType: "application/json; charset=utf-8",
 						async:false,

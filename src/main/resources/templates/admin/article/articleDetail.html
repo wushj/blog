@@ -4,20 +4,18 @@
     <!--新增tag  -->
     <div id="winNewTag" class="animated">
         <div class="dialogTop">
-            <a href="javascript:tipClose();" class="claseDialogBtn">关闭</a>
+            <a href="javascript:winTagClose();" class="claseDialogBtn">关闭</a>
         </div>
         <form id="new_cate_form" method="post" style="margin: 10px; margin-bottom: 0px;">
-            <table cellpadding="5" style="width: 400px;">
-                <tr>
-                    <td>标签名称：</td>
-                    <td id="name"></td>
-                </tr>
-            </table>
+            <ul class="editInfos">
+                <li>
+                    <label>名称：<input type="text" id="tagName" name="tagName" required value="true" class="ipt" /></label>
+                </li>
+                <li>
+                    <input id ="saveTag" type="button" value="确认"  class="submitBtn" />
+                </li>
+            </ul>
         </form>
-        <div style="text-align: right; padding: 5px; margin-right: 7px;">
-            <a href="javascript:void(0)" class="button" id="saveTag">&nbsp;&nbsp;<b>保存</b>&nbsp;&nbsp;
-            </a>
-        </div>
     </div>
 
     <div class="dialogTop">
@@ -43,68 +41,8 @@
                 </select>
             </label></li>
             <li><label>标签：
-                <input id="tags" name="inputTagator" th:value="${tags}" class="ipt inputTagator">
+                <input id="tags" name="tags" th:value="${article.tags}" class="ipt">
                 </input>
-                <script th:inline="javascript">
-                //获取当前产品标签
-                //<![CDATA[
-                $(function() {
-                    var obj = [[${tags}]];
-                    $('#tags').tagator({
-                        autocomplete: obj
-                    });
-                });
-
-                function openLayer(text, callBack) {
-                    $('#winNewTag').removeAttr('class').addClass('animated ' + 'bounceIn').fadeIn();
-                    $('#tagName').html(text);
-                    $('#winNewTag').off('click');
-                    $('#winNewTag').on('click', '#saveTag', function() {
-                        insertTag(callBack);
-                    })
-                }
-
-                function insertTag(callBack) {
-                    var postData = {};
-
-                    postData.categoryId = null;
-                    postData.relativeItems=[];
-                    postData.relativeRecipes=[];
-                    var n = $('#categoryId').combotree('tree').tree('getSelected');
-                    if (n != null) {
-                        postData.categoryId = n.id;
-                    }
-                    if(postData.categoryId==null){
-                        msgShow("系统提示","请选择标签分类","warning");
-                        return;
-                    }
-                    $.ajax({
-                        type: 'POST',
-                        url: '/tag/add_tag_for_item.json',
-                        data: JSON.stringify(postData),
-                        contentType: "application/json; charset=utf-8",
-                        beforeSend: function () {
-                            $("#saveTag").attr("disabled","true");
-                        },
-                        success: function (data) {
-                            callBack(data);
-                            layer.msg("保存成功！", {
-                                time: 1000 //1s后自动关闭
-                            });
-                            $('#dialog').addClass('bounceOutUp').fadeOut();
-                        },
-                        error: function (errMsg) {
-                            layer.msg(JSON.stringify(errMsg), {
-                                time: 1000 //1s后自动关闭
-                            });
-                        },
-                        complete: function () {
-                            $("#saveTag").removeAttr("disabled");
-                        }
-                    });
-                }
-                //]]>
-                </script>
             </label></li>
 
             <li>

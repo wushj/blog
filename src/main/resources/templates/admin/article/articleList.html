@@ -144,8 +144,48 @@
 
     //初始化页面数据
     $(function(){
-        initPage()
+        initPage();
     })
+
+    function openLayer(text, callBack) {
+        $('#winNewTag').removeAttr('class').addClass('animated ' + 'bounceIn').fadeIn();
+        $('#tagName').val(text);
+        $('#winNewTag').off('click');
+        $('#winNewTag').on('click', '#saveTag', function() {
+            insertTag(callBack);
+        })
+    }
+
+    function insertTag(callBack) {
+        $.ajax({
+            type: 'POST',
+            url: '/admin/tag/inertOrUpdate',
+            data: 'name=' + $('#tagName').val(),
+            beforeSend: function () {
+                $("#saveTag").attr("disabled","true");
+            },
+            success: function (data) {
+                callBack(data);
+                layer.msg("保存成功！", {
+                    time: 1000 //1s后自动关闭
+                });
+                winTagClose();
+            },
+            error: function (errMsg) {
+                layer.msg(JSON.stringify(errMsg), {
+                    time: 1000 //1s后自动关闭
+                });
+            },
+            complete: function () {
+                $("#saveTag").removeAttr("disabled");
+            }
+        });
+    }
+
+    //关闭弹窗
+    function winTagClose() {
+        $('#winNewTag').addClass('bounceOutUp').fadeOut();
+    };
 
     //点击新增按钮
     function articleAdd(){
@@ -154,6 +194,10 @@
             method:"GET",
             success  : function(data) {
                 $('#dialog').html(data);
+                var obj = $('#tags').val();
+                $('#tags').tagator({
+                    autocomplete: obj
+                });
                 tipOpen();
             }
         });
@@ -166,6 +210,10 @@
             method:"GET",
             success  : function(data) {
                 $('#dialog').html(data);
+                var obj = $('#tags').val();
+                $('#tags').tagator({
+                    autocomplete: obj
+                });
                 tipOpen();
             }
         });
@@ -207,24 +255,43 @@
 
     // 编辑分类
     function saveArticle(){
+        var data = {};
+        $("#editForm").serializeArray().map(function(x){
+            if (data[x.name] != undefined) {
+                if (!data[x.name].push) {
+                    data[x.name] = [data[x.name]];
+                }
+                data[x.name].push(x.value);
+            } else {
+                data[x.name] = x.value;
+            }
+        });
+        var tags = eval('(' + $("#tags").val() + ')');
+        var tagModels = [];
+        for(var index in tags){
+            tagModels.push(tags[index]);
+        }
+        data.tags = tagModels;
+
         $('#saveButton').attr("disabled","true");
         if(validateArticle()){
             $.ajax({
+                type: 'POST',
                 url : '/admin/article/inertOrUpdate',
-                data : decodeURIComponent($("#editForm").serialize(),true),
+                data : JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
                 success  : function(data) {
-                    if(data.resultCode == 'success'){
-                        layer.msg('保存成功!', {
-                            time: 1000 //1s后自动关闭
-                        });
-                        tipClose();
-                        initPage();
-                        loadArticleList();
-                    }else{
-                        layer.msg(data.errorInfo, {
-                            time: 1000 //1s后自动关闭
-                        });
-                    }
+                    layer.msg('保存成功!', {
+                        time: 1000 //1s后自动关闭
+                    });
+                    tipClose();
+                    initPage();
+                    loadArticleList();
+                },
+                error : function (errMsg) {
+                    layer.msg(errMsg, {
+                        time: 1000 //1s后自动关闭
+                    });
                 }
             });
         }

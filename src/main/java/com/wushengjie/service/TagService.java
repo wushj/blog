@@ -54,7 +54,7 @@ public class TagService{
      * @param tag
      */
     public void inertOrUpdate(Tag tag){
-        if(0 == tag.getId()){
+        if(tag.getId() == null || 0 == tag.getId()){
             tag.setCreateTime(new Date());
             tagDao.insertSelective(tag);
         }else{

@@ -113,6 +113,7 @@ public class ArticleService{
             ArticleTags relative = new ArticleTags();
             relative.setArticleId(article.getId());
             relative.setTagId(tag.getId());
+            relative.setCreateTime(new Date());
             articleTagsDao.insert(relative);
         }
     }
