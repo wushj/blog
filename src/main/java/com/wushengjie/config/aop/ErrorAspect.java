@@ -33,7 +33,7 @@ public class ErrorAspect {
     private JavaMailSender mailSender;
 
     private Logger logger = LoggerFactory.getLogger(ErrorAspect.class);
-    @Pointcut("execution(* com.wushengjie.controller.*.*(..))")
+    @Pointcut("execution(* com.wushengjie.service.*.*(..))")
     public void exceptionLog(){}
 
     /**
