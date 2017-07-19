@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="zh">
 
-
     <!--新增tag  -->
-    <div id="winNewTag" style="overflow: hidden;">
+    <div id="winNewTag" class="animated">
+        <div class="dialogTop">
+            <a href="javascript:tipClose();" class="claseDialogBtn">关闭</a>
+        </div>
         <form id="new_cate_form" method="post" style="margin: 10px; margin-bottom: 0px;">
             <table cellpadding="5" style="width: 400px;">
                 <tr>
@@ -41,8 +43,7 @@
                 </select>
             </label></li>
             <li><label>标签：
-                <input id="tags" name="inputTagator" th:value="${tags}" class="inputTagator"
-                   style="height: 60px; width: 400px;">
+                <input id="tags" name="inputTagator" th:value="${tags}" class="ipt inputTagator">
                 </input>
                 <script th:inline="javascript">
                 //获取当前产品标签
@@ -52,26 +53,56 @@
                     $('#tags').tagator({
                         autocomplete: obj
                     });
-                    $('#winNewTag').window({
-                        width:350,
-                        height:150,
-                        modal:true,
-                        title:"新增标签",
-                        minimizable:false,
-                        maximizable:false,
-                        collapsible:false,
-                        closed:true
-                    });
+                });
 
-                    $('#categoryId').combotree({
-                        onBeforeSelect: function(node) {
-                            var isLeaf = $(this).tree('isLeaf', node.target);
-                            if (!isLeaf) {// 判断是否是叶子节点
-                                return false;// 返回false表示取消本次选择操作
-                            }
+                function openLayer(text, callBack) {
+                    $('#winNewTag').removeAttr('class').addClass('animated ' + 'bounceIn').fadeIn();
+                    $('#tagName').html(text);
+                    $('#winNewTag').off('click');
+                    $('#winNewTag').on('click', '#saveTag', function() {
+                        insertTag(callBack);
+                    })
+                }
+
+                function insertTag(callBack) {
+                    var postData = {};
+
+                    postData.categoryId = null;
+                    postData.relativeItems=[];
+                    postData.relativeRecipes=[];
+                    var n = $('#categoryId').combotree('tree').tree('getSelected');
+                    if (n != null) {
+                        postData.categoryId = n.id;
+                    }
+                    if(postData.categoryId==null){
+                        msgShow("系统提示","请选择标签分类","warning");
+                        return;
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: '/tag/add_tag_for_item.json',
+                        data: JSON.stringify(postData),
+                        contentType: "application/json; charset=utf-8",
+                        beforeSend: function () {
+                            $("#saveTag").attr("disabled","true");
+                        },
+                        success: function (data) {
+                            callBack(data);
+                            layer.msg("保存成功！", {
+                                time: 1000 //1s后自动关闭
+                            });
+                            $('#dialog').addClass('bounceOutUp').fadeOut();
+                        },
+                        error: function (errMsg) {
+                            layer.msg(JSON.stringify(errMsg), {
+                                time: 1000 //1s后自动关闭
+                            });
+                        },
+                        complete: function () {
+                            $("#saveTag").removeAttr("disabled");
                         }
                     });
-                });
+                }
                 //]]>
                 </script>
             </label></li>

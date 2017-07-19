@@ -4,7 +4,6 @@
 <link rel="stylesheet" href="/assets/admin/css/fm.tagator.jquery.css">
 
 <body data-type="widget">
-<script src="/assets/admin/js/theme.js"></script>
 <div class="am-g tpl-g">
     <!-- 头部 -->
     <header th:replace="admin/partial/header :: header"></header>
@@ -119,6 +118,7 @@
 <script src="/assets/admin/js/amazeui.datatables.min.js"></script>
 <script src="/assets/admin/js/dataTables.responsive.min.js"></script>
 <script src="/assets/admin/js/app.js"></script>
+<script src="/assets/admin/js/theme.js"></script>
 <script src="/assets/js/jqPaginator.min.js"></script>
 <script src="/assets/js/validation.js"></script>
 <script src="/assets/admin/js/fm.tagator.jquery.js"></script>
@@ -336,59 +336,6 @@
         });
         progress.done();
     }
-
-    function openLayer(text, callBack) {
-        $('#winNewTag').window('open');
-        $('#winNewTag').window('center');
-        $('#tagName').html(text);
-        $('#winNewTag').off('click');
-        $('#winNewTag').on('click', '#saveTag', function() {
-            insertTag(callBack);
-        })
-    }
-
-    function insertTag(callBack) {
-        var postData = {};
-        postData.name = $("#tagName").html();
-        postData.description = null;
-        postData.status = 1;
-        postData.categoryId = null;
-        postData.relativeItems=[];
-        postData.relativeRecipes=[];
-        var n = $('#categoryId').combotree('tree').tree('getSelected');
-        if (n != null) {
-            postData.categoryId = n.id;
-        }
-        if(postData.categoryId==null){
-            msgShow("系统提示","请选择标签分类","warning");
-            return;
-        }
-        $.ajax({
-            type: 'POST',
-            url: '/tag/add_tag_for_item.json',
-            data: JSON.stringify(postData),
-            contentType: "application/json; charset=utf-8",
-            beforeSend: function () {
-                $("#saveTag").attr("disabled","true");
-            },
-            success: function (data) {
-                callBack(data);
-                layer.msg("保存成功！", {
-                    time: 1000 //1s后自动关闭
-                });
-                $('#winNewTag').window('close');
-            },
-            error: function (errMsg) {
-                layer.msg(JSON.stringify(errMsg), {
-                    time: 1000 //1s后自动关闭
-                });
-            },
-            complete: function () {
-                $("#saveTag").removeAttr("disabled");
-            }
-        });
-    }
-
     //]]>
 </script>
 
