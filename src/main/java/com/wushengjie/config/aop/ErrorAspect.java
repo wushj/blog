@@ -82,7 +82,6 @@ public class ErrorAspect {
             logger.error("发送邮件失败！：" + e.getMessage());
             e.printStackTrace();
         }
-
     }
 
 
