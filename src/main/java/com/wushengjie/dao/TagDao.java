@@ -28,4 +28,6 @@ public interface TagDao {
     Tag findById(@Param("id")Integer id);
 
     int deleteById(@Param("id")Integer id);
+
+    List<Tag> getTagsByArticleId(@Param("articleId")Integer articleId);
 }

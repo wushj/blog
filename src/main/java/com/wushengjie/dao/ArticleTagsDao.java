@@ -14,4 +14,8 @@ public interface ArticleTagsDao {
     int insertList(@Param("pojos") List<ArticleTags> pojo);
 
     int update(@Param("pojo") ArticleTags pojo);
+
+    int deleteByArticleId(@Param("articleId")Integer articleId);
+
+
 }

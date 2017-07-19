@@ -1,5 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="zh">
+
+    <!--新增tag  -->
+    <div id="winNewTag" class="animated">
+        <div class="dialogTop">
+            <a href="javascript:winTagClose();" class="claseDialogBtn">关闭</a>
+        </div>
+        <form id="new_cate_form" method="post" style="margin: 10px; margin-bottom: 0px;">
+            <ul class="editInfos">
+                <li>
+                    <label>名称：<input type="text" id="tagName" name="tagName" required value="true" class="ipt" /></label>
+                </li>
+                <li>
+                    <input id ="saveTag" type="button" value="确认"  class="submitBtn" />
+                </li>
+            </ul>
+        </form>
+    </div>
+
     <div class="dialogTop">
         <a href="javascript:tipClose();" class="claseDialogBtn">关闭</a>
     </div>
@@ -22,6 +40,11 @@
                     <option value="1" th:selected="${article.status == 1}" th:text="禁用"></option>
                 </select>
             </label></li>
+            <li><label>标签：
+                <input id="tags" name="tags" th:value="${article.tags}" class="ipt">
+                </input>
+            </label></li>
+
             <li>
                 <label>描述：<input type="text" id="description" name="description" th:value="${article.description}" required value="true" class="ipt" /></label>
             </li>

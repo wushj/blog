@@ -1,24 +1,20 @@
 package com.wushengjie.controller.admin.article;
 
+import com.alibaba.fastjson.JSON;
 import com.wushengjie.service.ArticleService;
 import com.wushengjie.service.CategoryService;
-import com.wushengjie.service.UserService;
+import com.wushengjie.service.TagService;
 import com.wushengjie.util.ResultInfo;
 import com.wushengjie.util.ResultInfoFactory;
 import com.wushengjie.vo.Article;
 import com.wushengjie.vo.Category;
 import com.wushengjie.vo.Pager;
-import com.wushengjie.vo.User;
-import org.apache.shiro.SecurityUtils;
+import com.wushengjie.vo.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -35,6 +31,9 @@ public class AdminArticleController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private TagService tagService;
     /**
      * 跳转到文章列表页面
      * @return
@@ -73,9 +72,9 @@ public class AdminArticleController {
      * 更新或新增文章
      * @return
      */
-    @RequestMapping("/inertOrUpdate")
+    @RequestMapping(value = "/inertOrUpdate" , method = RequestMethod.POST)
     @ResponseBody
-    public ResultInfo inertOrUpdate(Article article){
+    public ResultInfo inertOrUpdate(@RequestBody Article article){
         articleService.inertOrUpdate(article);
         return ResultInfoFactory.getSuccessResultInfo("保存成功！！！");
     }
@@ -117,6 +116,9 @@ public class AdminArticleController {
     public String editPage(@PathVariable Integer id, Model model){
         List<Category> categoryList = categoryService.findAll();
         model.addAttribute("categoryList",categoryList);
+        List<Tag> tagsList = (List<Tag>) tagService.getTagsByArticleId(id);
+        String tags = JSON.toJSONString(tagsList);
+        model.addAttribute("tags",tags);
         Article article = articleService.findById(id);
         model.addAttribute("article",article);
         return "admin/article/articleDetail";

@@ -8,9 +8,7 @@ import com.wushengjie.vo.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -25,6 +23,21 @@ public class AdminTagController {
 
     @Autowired
     private TagService tagService;
+
+    /**
+     * 根据关键字获取标签
+     * @param name
+     * @return
+     */
+    @RequestMapping(value = "/getTagByName", method = RequestMethod.GET)
+    public @ResponseBody List<Tag> getTagByName(@RequestParam String name) {
+        if (name != null && !"".equals(name)) {
+            return tagService.queryTagsByName(name);
+        }else{
+            return null;
+        }
+    }
+
     /**
      * 跳转到文章列表页面
      * @return

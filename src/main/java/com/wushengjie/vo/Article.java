@@ -1,6 +1,7 @@
 package com.wushengjie.vo;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by WU on 2017/7/9.
@@ -11,6 +12,8 @@ public class Article extends BaseVO{
     private Integer categoryId; //文章分类id
 
     private String categoryName; //分类名称
+
+    private List<Tag> tags; //分类名称
 
     private String title;   //标题
 
@@ -25,6 +28,14 @@ public class Article extends BaseVO{
     private Date updateTime;    //更新时间
 
     private Integer showCount;  //浏览数
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
 
     public Integer getCategoryId() {
         return categoryId;

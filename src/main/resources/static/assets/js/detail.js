@@ -22,11 +22,15 @@ $(function(){
 function initPage() {
     var categoryId = $("#categoryId").text();
     var tagId = $("#tagId").text();
+    var searchKey = $("#searchKey").text();
+
     var url = null;
     if(categoryId != null && categoryId != undefined && categoryId != "") {
         url = '/category/initPage/' + categoryId;
     }else if(tagId != null && tagId != undefined && tagId != ""){
         url = '/tag/initPage/' + tagId;
+    }else if(searchKey != null && searchKey != undefined && searchKey != ""){
+        url = '/search/initPage/' + searchKey;
     }
 
     var page = $("#current-page").text();
@@ -66,12 +70,15 @@ function loadCategoryArticleList(){
     // 收集参数
     var categoryId = $("#categoryId").text();
     var tagId = $("#tagId").text();
+    var searchKey = $("#searchKey").text();
     var url = null;
     //根据分类 或者 标签 加载文章列表
     if(categoryId != null && categoryId != undefined && categoryId != "") {
         url = '/category/load/' + categoryId;
     }else if(tagId != null && tagId != undefined && tagId != ""){
         url = '/tag/load/' + tagId;
+    }else if(searchKey != null && searchKey != undefined && searchKey != ""){
+        url = '/search/load/' + searchKey;
     }
 
     var page = $("#current-page").text();

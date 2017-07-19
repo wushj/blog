@@ -27,7 +27,7 @@
                                             <div class="circ"></div>
                                             <div class="time" th:text="${#dates.format(article.createTime,'MM-dd')}"></div>
                                             <div class="events">
-                                                <div class="events-header" th:text="${article.title}"></div>
+                                                <div class="events-header" th:onclick="'window.location.href=&quot;/article/'+${article.id}+'&quot;'" th:text="${article.title}"></div>
                                                 <div class="events-body">
                                                     <div class="row" th:text="${article.description}" style="text-align: center">
                                                     </div>
@@ -38,7 +38,7 @@
                                             <div class="circ"></div>
                                             <div class="time" th:text="${#dates.format(article.createTime,'MM-dd')}"></div>
                                             <div class="events">
-                                                <div class="events-header" th:text="${article.title}"></div>
+                                                <div class="events-header" th:onclick="'window.location.href=&quot;/article/'+${article.id}+'&quot;'" th:text="${article.title}"></div>
                                                 <div class="events-body">
                                                     <div class="row" th:text="${article.description}" style="text-align: center">
                                                     </div>

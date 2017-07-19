@@ -3,9 +3,8 @@ package com.wushengjie.service;
 import com.github.pagehelper.PageHelper;
 import com.github.rjeschke.txtmark.Processor;
 import com.wushengjie.dao.ArticleDao;
-import com.wushengjie.vo.Article;
-import com.wushengjie.vo.ArticleArchive;
-import com.wushengjie.vo.Pager;
+import com.wushengjie.dao.ArticleTagsDao;
+import com.wushengjie.vo.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,6 +16,9 @@ public class ArticleService{
 
     @Resource
     private ArticleDao articleDao;
+
+    @Resource
+    private ArticleTagsDao articleTagsDao;
 
     public int insert(Article pojo){
         return articleDao.insert(pojo);
@@ -35,7 +37,16 @@ public class ArticleService{
     }
 
     /**
-     * 根据分类加载文章分页信息
+     * 根据文章ID删除文章和标签关联
+     * @param articleId
+     * @return
+     */
+    public int deleteArticleTagRelationByArticleId(Integer articleId){
+       return articleTagsDao.deleteByArticleId(articleId);
+    }
+
+    /**
+     * 根据标签加载文章分页信息
      * @param pager
      * @param categoryId
      */
@@ -45,7 +56,7 @@ public class ArticleService{
     }
 
     /**
-     * 分页获取分类下文章
+     * 分页获取标签下文章
      */
     public List<Article> findByTagId(Pager pager,Integer categoryId){
         PageHelper.offsetPage(pager.getStart(), pager.getLimit());
@@ -87,6 +98,23 @@ public class ArticleService{
         }else{
             article.setUpdateTime(new Date());
             this.update(article);
+        }
+        buildTags(article);
+    }
+
+    /**
+     * 构建文章标签
+     * @param article
+     */
+    public void buildTags(Article article) {
+        //删除并重建文章标签
+        deleteArticleTagRelationByArticleId(article.getId());
+        for(Tag tag : article.getTags()) {
+            ArticleTags relative = new ArticleTags();
+            relative.setArticleId(article.getId());
+            relative.setTagId(tag.getId());
+            relative.setCreateTime(new Date());
+            articleTagsDao.insert(relative);
         }
     }
 
@@ -173,5 +201,22 @@ public class ArticleService{
      */
     public int getArchiveMonthCount() {
         return articleDao.getArchiveMonthCount();
+    }
+    /**
+     * 根据标签加载文章分页信息
+     * @param pager
+     * @param key
+     */
+    public void initPageByKey(Pager pager,String key){
+        int count = articleDao.initPageByKey(pager,key);
+        pager.setTotalCount(count);
+    }
+
+    /**
+     * 分页获取标签下文章
+     */
+    public List<Article> searchByKey(Pager pager,String key){
+        PageHelper.offsetPage(pager.getStart(), pager.getLimit());
+        return articleDao.findByKey(key);
     }
 }
