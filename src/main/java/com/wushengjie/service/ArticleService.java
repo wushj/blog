@@ -111,7 +111,7 @@ public class ArticleService{
     public void buildTags(Article article) {
         //删除并重建文章标签
         deleteArticleTagRelationByArticleId(article.getId());
-//        if(article.getTags() != null){
+        if(article.getTags() != null){
             for(Tag tag : article.getTags()) {
                 ArticleTags relative = new ArticleTags();
                 relative.setArticleId(article.getId());
@@ -119,7 +119,7 @@ public class ArticleService{
                 relative.setCreateTime(new Date());
                 articleTagsDao.insert(relative);
             }
-//        }
+        }
     }
 
     /**
