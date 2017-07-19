@@ -1412,3 +1412,19 @@ fieldset[disabled] .btn-clean-two.active {
   text-decoration: none;
   outline: none;
 }
+
+#spinner{
+  z-index:9999;
+  position: fixed;
+  top: 20px;
+  left: 40%;
+  display: block;
+  color: #e6f3f8;
+  font-weight: 900;
+  background: #5a6065;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 100px;
+  padding-right: 100px;
+  border-radius: 15px;
+}

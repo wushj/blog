@@ -38,6 +38,8 @@ public interface ArticleDao {
 
     List<Article> findTop6OrderByShowCount();
 
+    int getArchiveMonthCount();
+
     List<ArticleArchive> getArchiveMonth();
 
     List<Article> findByMonth(@Param("month")String month);

@@ -157,13 +157,21 @@ public class ArticleService{
         if(index == null){
             index = 0;
         }
-        //每次初始2个月
-        PageHelper.startPage(index,2);
+        //每次加载1个月
+        PageHelper.offsetPage(index,1);
         List<ArticleArchive> articleArchiveList = articleDao.getArchiveMonth();
 
         for (ArticleArchive archive : articleArchiveList) {
             archive.setArticleList(articleDao.findByMonth(archive.getMonth()));
         }
         return articleArchiveList;
+    }
+
+    /**
+     * 获取月份总数
+     * @return
+     */
+    public int getArchiveMonthCount() {
+        return articleDao.getArchiveMonthCount();
     }
 }

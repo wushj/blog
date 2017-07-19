@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:if="${archiveList} != null" th:each="archive,stat :${archiveList}">
+    <dt th:text="${archive.month}"></dt>
+    <div th:each="article,stat2 :${archive.articleList}">
+        <dd th:if="${stat2.index % 2 == 0}" class="pos-left clearfix">
+            <div class="circ"></div>
+            <div class="time" th:text="${#dates.format(article.createTime,'MM-dd')}"></div>
+            <div class="events">
+                <div class="events-header" th:text="${article.title}"></div>
+                <div class="events-body">
+                    <div class="row" th:text="${article.description}" style="text-align: center">
+                    </div>
+                </div>
+            </div>
+        </dd>
+        <dd th:if="${stat2.index % 2 != 0}" class="pos-right clearfix">
+            <div class="circ"></div>
+            <div class="time" th:text="${#dates.format(article.createTime,'MM-dd')}"></div>
+            <div class="events">
+                <div class="events-header" th:text="${article.title}"></div>
+                <div class="events-body">
+                    <div class="row" th:text="${article.description}" style="text-align: center">
+                    </div>
+                </div>
+            </div>
+        </dd>
+    </div>
+</div>
