@@ -3,8 +3,8 @@
 自学道路上的第一个项目，个人博客，记录自己的学习过程
 ------------
 
-##技术栈
-###后端
+## 技术栈
+### 后端
 - SpringBoot
 - Mybatis
 - Shiro (后台管理登陆)
@@ -13,7 +13,7 @@
 ------------
 
 
-###前端
+### 前端
 - [thymeleaf](http://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html "thymeleaf") 模板渲染
 - [Amaze Ui](http://amazeui.org/ "Amaze Ui") 后台管理界面框架
 - [jqpaginator](http://jqpaginator.keenwon.com/ "jqpaginator") 分页插件
@@ -26,7 +26,7 @@
 - [搜狐畅言](https://changyan.kuaizhan.com/ "搜狐畅言") 文章评论插件
 - [博客首页模板](http://demo.cssmoban.com/cssthemes4/btts_5_rv/index.html "博客首页模板")
 
-##后台展示图
+## 后台展示图
 ![后台管理](http://wushengjie.oss-cn-shenzhen.aliyuncs.com/blog/img/1500485583166.jpg "后台管理")
 
 
