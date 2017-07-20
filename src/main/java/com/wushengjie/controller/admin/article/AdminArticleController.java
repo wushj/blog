@@ -83,9 +83,9 @@ public class AdminArticleController {
      * 保存文章内容
      * @return
      */
-    @RequestMapping("/updateContent")
+    @RequestMapping(value = "/updateContent" ,method = RequestMethod.POST)
     @ResponseBody
-    public ResultInfo updateContent(Article article){
+    public ResultInfo updateContent(@RequestBody Article article){
         Article oldArticle = articleService.findById(article.getId());
         oldArticle.setContent(article.getContent());
         oldArticle.setUpdateTime(new Date());

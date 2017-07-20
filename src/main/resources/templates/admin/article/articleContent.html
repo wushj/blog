@@ -99,8 +99,10 @@
                 data.id = $("#article-id").val();
                 data.content = testEditor.getMarkdown();
                 $.ajax({
+                    type: 'POST',
                     url : '/admin/article/updateContent',
-                    data : data,
+                    data : JSON.stringify(data),
+                    contentType: "application/json; charset=utf-8",
                     success  : function(data) {
                         if(data.resultCode == 'success'){
                             layer.confirm('保存成功，是否返回列表？', {
