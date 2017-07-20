@@ -266,12 +266,19 @@
                 data[x.name] = x.value;
             }
         });
-        var tags = eval('(' + $("#tags").val() + ')');
-        var tagModels = [];
-        for(var index in tags){
-            tagModels.push(tags[index]);
+        if($("#tags").val() != null && $("#tags").val() != undefined && "" != $("#tags").val()){
+            var tags = eval('(' + $("#tags").val() + ')');
+            var tagModels = [];
+            for(var index in tags){
+                tagModels.push(tags[index]);
+            }
+            data.tags = tagModels;
+        }else{
+            data.tags = null;
         }
-        data.tags = tagModels;
+
+        //移除空元素
+        deleteEmptyProperty(data);
 
         $('#saveButton').attr("disabled","true");
         if(validateArticle()){

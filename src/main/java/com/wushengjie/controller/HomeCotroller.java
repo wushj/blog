@@ -57,6 +57,8 @@ public class HomeCotroller {
      */
     @RequestMapping("archive")
     public String archive(Integer index,Model model){
+        int total = articleService.getArchiveMonthCount();
+        model.addAttribute("total",total);
         List<ArticleArchive> archiveList = articleService.getArchive(index);
         model.addAttribute("archiveList",archiveList);
         return "archive";

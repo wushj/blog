@@ -257,6 +257,15 @@
         LIMIT 0,6
     </select>
 
+
+    <select id="getArchiveMonthCount" resultType="int">
+        SELECT
+        count(DISTINCT(DATE_FORMAT(A.CREATE_TIME,'%Y%年%c%月'))) monthNum
+        FROM ARTICLE A
+        WHERE A.STATUS= 0
+        ORDER BY A.CREATE_TIME DESC
+    </select>
+
     <select id="getArchiveMonth" resultMap="ArticleArchiveMap">
         SELECT
             DISTINCT(DATE_FORMAT(A.CREATE_TIME,'%Y%年%c%月')) month
@@ -272,6 +281,7 @@
         from ARTICLE A
         WHERE A.STATUS= 0
         AND DATE_FORMAT(A.CREATE_TIME,'%Y%年%c%月') like concat('%',#{month},'%')
+        ORDER BY A.CREATE_TIME DESC
     </select>
 </mapper>
 

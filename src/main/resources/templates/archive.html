@@ -6,15 +6,20 @@
     <header th:replace="partial/header :: header"></header>
 	<link rel="stylesheet" href="/assets/css/jquery.eeyellow.Timeline.css">
 
+    <div id="total" th:text="${total}" style="display: none;"></div>
+
     <div class="widewrapper main" >
         <div class="container">
-            <div class="row" id='endlessRow'>
+            <div class="row" >
                 <div class="col-md-6 clean-superblock">
                    <div class="container">
 					  <div class="row">
 						<div class="col-md-12">
 						  <div class="VivaTimeline">
-							<dl>
+							<dl id='endlessRow'>
+                                <div id="spinner">
+                                    正在加载...
+                                </div>
                                 <div th:each="archive,stat :${archiveList}">
 							        <dt th:text="${archive.month}"></dt>
                                     <div th:each="article,stat2 :${archive.articleList}">
@@ -22,7 +27,7 @@
                                             <div class="circ"></div>
                                             <div class="time" th:text="${#dates.format(article.createTime,'MM-dd')}"></div>
                                             <div class="events">
-                                                <div class="events-header" th:text="${article.title}"></div>
+                                                <div class="events-header" th:onclick="'window.location.href=&quot;/article/'+${article.id}+'&quot;'" th:text="${article.title}"></div>
                                                 <div class="events-body">
                                                     <div class="row" th:text="${article.description}" style="text-align: center">
                                                     </div>
@@ -33,7 +38,7 @@
                                             <div class="circ"></div>
                                             <div class="time" th:text="${#dates.format(article.createTime,'MM-dd')}"></div>
                                             <div class="events">
-                                                <div class="events-header" th:text="${article.title}"></div>
+                                                <div class="events-header" th:onclick="'window.location.href=&quot;/article/'+${article.id}+'&quot;'" th:text="${article.title}"></div>
                                                 <div class="events-body">
                                                     <div class="row" th:text="${article.description}" style="text-align: center">
                                                     </div>

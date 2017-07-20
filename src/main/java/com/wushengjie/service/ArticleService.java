@@ -6,6 +6,7 @@ import com.wushengjie.dao.ArticleDao;
 import com.wushengjie.dao.ArticleTagsDao;
 import com.wushengjie.vo.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -91,6 +92,7 @@ public class ArticleService{
      * 更新或新增文章
      * @param article
      */
+    @Transactional
     public void inertOrUpdate(Article article){
         if(0 == article.getId()){
             article.setCreateTime(new Date());
@@ -109,12 +111,14 @@ public class ArticleService{
     public void buildTags(Article article) {
         //删除并重建文章标签
         deleteArticleTagRelationByArticleId(article.getId());
-        for(Tag tag : article.getTags()) {
-            ArticleTags relative = new ArticleTags();
-            relative.setArticleId(article.getId());
-            relative.setTagId(tag.getId());
-            relative.setCreateTime(new Date());
-            articleTagsDao.insert(relative);
+        if(article.getTags() != null){
+            for(Tag tag : article.getTags()) {
+                ArticleTags relative = new ArticleTags();
+                relative.setArticleId(article.getId());
+                relative.setTagId(tag.getId());
+                relative.setCreateTime(new Date());
+                articleTagsDao.insert(relative);
+            }
         }
     }
 
@@ -167,10 +171,14 @@ public class ArticleService{
         PageHelper.offsetPage(pager.getStart(), pager.getLimit());
         List<Article> articleList = articleDao.findAll();
         for (Article article : articleList) {
-            //取第一个换行前的文本作为博客预览
-            String content = String.valueOf(String.valueOf(article.getContent()).split("\n")[0]);
-            //转换markdown为html
-            content = Processor.process(content);
+
+            //取第二个换行前的文本作为博客预览
+            String content = "";
+            if((article.getContent()).split("\n").length > 2) {
+                content = String.valueOf(String.valueOf(article.getContent()).split("\n")[1]);
+                //转换markdown为html
+                content = Processor.process(content);
+            }
             article.setContent(content);
         }
         return articleList;
@@ -185,8 +193,8 @@ public class ArticleService{
         if(index == null){
             index = 0;
         }
-        //每次初始2个月
-        PageHelper.startPage(index,2);
+        //每次加载1个月
+        PageHelper.offsetPage(index,1);
         List<ArticleArchive> articleArchiveList = articleDao.getArchiveMonth();
 
         for (ArticleArchive archive : articleArchiveList) {
@@ -195,6 +203,13 @@ public class ArticleService{
         return articleArchiveList;
     }
 
+    /**
+     * 获取月份总数
+     * @return
+     */
+    public int getArchiveMonthCount() {
+        return articleDao.getArchiveMonthCount();
+    }
     /**
      * 根据标签加载文章分页信息
      * @param pager

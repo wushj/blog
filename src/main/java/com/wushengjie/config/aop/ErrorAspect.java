@@ -33,7 +33,7 @@ public class ErrorAspect {
     private JavaMailSender mailSender;
 
     private Logger logger = LoggerFactory.getLogger(ErrorAspect.class);
-    @Pointcut("execution(* com.wushengjie.controller.*.*(..))")
+    @Pointcut("execution(* com.wushengjie.service.*.*(..))")
     public void exceptionLog(){}
 
     /**
@@ -56,9 +56,10 @@ public class ErrorAspect {
         String classMethod = String.valueOf(joinPoint.getSignature().getDeclaringTypeName()+"."+joinPoint.getSignature().getName());
         String time = DateUtil.getDateTime(new Date());
         String errorMessege = String.valueOf(e.getLocalizedMessage());
+        StackTraceElement[] stackTrace = e.getStackTrace();
 
         String title = "Error Log";
-        String html = biuldHtml(ip, method, requestURL, args, classMethod, time, errorMessege);
+        String html = biuldHtml(ip, method, requestURL, args, classMethod, time, errorMessege,stackTrace);
         //发送邮件
         sendMail(title, html);
         logger.error(errorMessege);
@@ -82,12 +83,11 @@ public class ErrorAspect {
             logger.error("发送邮件失败！：" + e.getMessage());
             e.printStackTrace();
         }
-
     }
 
 
-    private String biuldHtml(String ip, String method, String requestURL, String args, String classMethod, String time, String errorMessege) {
-        return "<html><head></head><body>"
+    private String biuldHtml(String ip, String method, String requestURL, String args, String classMethod, String time, String errorMessege, StackTraceElement[] stackTrace) {
+        String html = "<html><head></head><body>"
                             + "<div style=\"padding-left:20px\">"
                             + "<table border=\"1px\" cellspacing=\"0px\" style=\"border-collapse:collapse\">"
                             + "<tr>"
@@ -109,7 +109,11 @@ public class ErrorAspect {
                             + "<td>time</td><td>"+time+"</td>"
                             + "</tr>"
                             + "</table></div>"
-                            + "<p>"+errorMessege+"</p>"
-                            + "</body></html>";
+                            + "<p>"+errorMessege+"</p>";
+        for (StackTraceElement s : stackTrace) {
+            html += "<p>"+ String.valueOf(s.toString()) +"</p>";
+        }
+        html += "</body></html>";
+        return html;
     }
 }

@@ -22,12 +22,21 @@ spring:
     mode: LEGACYHTML5
   #邮件配置
   mail:
+    protocol: smtp
     host: smtp.163.com
+    port: 465
     username: fjfjfj0851@163.com
     password: fjfjfj0851
-    properties:mail:smtp:auth: true
-    properties:mail:smtp:starttls:enable: true
-    properties:mail:smtp:starttls:required: true
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true # 需要认证
+          ssl.enable: true # 使用 SSL 加密通信
+          socketFactory:
+            port: 465 # 加密通信端口号，同通信端口
+            class: javax.net.ssl.SSLSocketFactory # 指定加密连接的工厂类
+            fallback: false # 不验证服务器端证书
 #邮件发送接收方
 mail:
   from: fjfjfj0851@163.com

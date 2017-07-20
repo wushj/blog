@@ -187,3 +187,31 @@ function isSpecialSymbolsNoPoint(str) {
 	var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\]<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]");
 	return pattern.test(str);
 }
+
+function deleteEmptyProperty(object){
+    for (var i in object) {
+        var value = object[i];
+        if (typeof value === 'object') {
+            if (Array.isArray(value)) {
+                if (value.length == 0) {
+                    delete object[i];
+                    continue;
+                }
+            }
+            deleteEmptyProperty(value);
+            if (isEmptyObj(value)) {
+                delete object[i];
+            }
+        } else {
+            if (value === '' || value === null || value === undefined) {
+                delete object[i];
+            }
+        }
+    }
+}
+function isEmptyObj(object) {
+    for (var name in object) {
+        return false;
+    }
+    return true;
+}
