@@ -97,7 +97,7 @@
     <select id="findAll" resultMap="AllColumnMap">
         select
         <include refid="all_column"/>
-        from LINK
+        from LINK ORDER BY `SORT`
     </select>
 
     <select id="initPage" resultType="int">
