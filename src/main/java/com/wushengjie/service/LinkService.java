@@ -2,7 +2,6 @@ package com.wushengjie.service;
 
 import com.github.pagehelper.PageHelper;
 import com.wushengjie.dao.LinkDao;
-import com.wushengjie.util.ResultInfo;
 import com.wushengjie.vo.Link;
 import com.wushengjie.vo.Pager;
 import org.springframework.stereotype.Service;
@@ -47,6 +46,9 @@ public class LinkService{
             Link oldLink = linkDao.findById(link.getId());
             if (oldLink != null) {
                 oldLink.setName(link.getName());
+                oldLink.setDesc(link.getDesc());
+                oldLink.setSort(link.getSort());
+                oldLink.setUrl(link.getUrl());
                 linkDao.update(oldLink);
             }
         }
